@@ -1,0 +1,29 @@
+{
+  "name": "magic-forest-wanderer",
+  "version": "1.0.0",
+  "description": "🌲🌲🌲🚪🏃🍃🕳💩👿🌲🌲🌲",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmos/magicForestWanderer.git"
+  },
+  "author": "Tom Canac <contact@tomcanac.com> (http://tomcanac.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tmos/magicForestWanderer/issues"
+  },
+  "homepage": "https://github.com/tmos/magicForestWanderer#readme",
+  "devDependencies": {
+    "browserify": "^14.1.0",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.1.5",
+    "gulp-util": "^3.0.8",
+    "tsify": "^3.0.1",
+    "typescript": "^2.2.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  }
+}
