@@ -1,4 +1,4 @@
 
 export function sayHello(name: string) {
-    return `Hello from ${name}`;
+    return `Salut from ${name}`;
 }
