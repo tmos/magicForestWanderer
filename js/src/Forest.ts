@@ -1,10 +1,10 @@
 import {trap, trapClue, empty, goal, monster, monsterClue, tree} from "./constants";
+import Floor from "./Floor";
 
 /**
  * A gloomy dark forest. There are lots of monsters and traps here. Be careful, wanderer...
  */
-export class Forest {
-    
+export default class Forest {
     private forest: number[] = [];
     private width: number = 0;
     private height: number = 0;
