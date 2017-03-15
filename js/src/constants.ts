@@ -1,5 +1,5 @@
-export const deep = "d";
-export const deepClue = "dc";
+export const trap = "d";
+export const trapClue = "dc";
 export const empty = "";
 export const goal = "g";
 export const monster = "m";
