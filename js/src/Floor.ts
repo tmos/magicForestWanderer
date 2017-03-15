@@ -6,5 +6,6 @@ import {trap, trapClue, empty, goal, monster, monsterClue, tree} from "./constan
  * Is an horrible monster on this floor? Or a lethal trap? Or a clue for the next floor? You'll see, wanderer...
  */
 export class Floor {
+    
 
 }

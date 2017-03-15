@@ -1,7 +1,7 @@
 import {trap, trapClue, empty, goal, monster, monsterClue, tree} from "./constants";
 
 /**
- * A gloomy dark forest. There are lots of monsters and traps everywere. Be careful, wanderer...
+ * A gloomy dark forest. There are lots of monsters and traps here. Be careful, wanderer...
  */
 export class Forest {
     
