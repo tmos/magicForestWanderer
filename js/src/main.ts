@@ -1,2 +1,2 @@
 import * as $ from "jquery";
-import * as jsboard from "./board";
+import * as jsboard from "./Forest";
