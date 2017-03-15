@@ -1,0 +1,24 @@
+/* switching to border-box model for all elements */
+html {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+html {
+  /* set base font-size to equiv "10px", which is adapted to rem unit */
+  font-size: 62.5%;
+  /* IE9-IE11 math fixing. See http://bit.ly/1g4X0bX */
+  /* thanks to @guardian, @victorbritopro and @eQRoeil */
+  font-size: calc(1em * 0.625);
+}
+
+body {
+  font-size: 1.4rem;
+  background-color: #fff;
+  color: #000;
+  font-family: sans-serif;
+  line-height: 1.4;
+}

@@ -1,20 +1,34 @@
-var gulp = require("gulp");
-var sourcemaps = require('gulp-sourcemaps');
-var browserify = require("browserify");
-var browserSync = require("browser-sync")
-var source = require('vinyl-source-stream');
-var sass = require('gulp-sass');
-var tsify = require("tsify");
-var paths = {
-    pages: ['index.html']
-};
+const gulp = require("gulp"),
+    sourcemaps = require('gulp-sourcemaps'),
+    browserify = require("browserify"),
+    browserSync = require("browser-sync")
+    source = require('vinyl-source-stream'),
+    sass = require('gulp-sass'),
+    tsify = require("tsify"),
+    tslint = require("gulp-tslint"),
+    plumber = require("gulp-plumber");
 
-gulp.task("copy-html", function () {
+const paths = {
+        pages: ['index.html']
+    };
+
+gulp.task("copy-html", () => {
     return gulp.src(paths.pages)
         .pipe(gulp.dest(""));
 });
 
-gulp.task("tsc", ["copy-html"], function () {
+gulp.task("tslint", () => {
+    return gulp.src("js/src/**/*.ts")
+        .pipe(plumber())
+        .pipe(tslint({
+            formatter: "stylish"
+        }))
+        .pipe(tslint.report({
+            emitError: false
+        }))
+})
+
+gulp.task("tsc", ["copy-html"], () => {
     return browserify({
         basedir: '.',
         debug: true,
@@ -24,12 +38,14 @@ gulp.task("tsc", ["copy-html"], function () {
     })
     .plugin(tsify)
     .bundle()
+    .on('error', console.error.bind(console))
     .pipe(source('main.js'))
     .pipe(gulp.dest("js"));
 });
 
-gulp.task("css", function(){
+gulp.task("css", () =>{
     return gulp.src("css/src/*.scss")
+        .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(sourcemaps.write("./sourcemaps"))
@@ -38,17 +54,13 @@ gulp.task("css", function(){
 })
 
 
-gulp.task('default', ['tsc'], function () {
-
-    // Serve files from the root of this project
+gulp.task('default', ['tsc'], () => {
     browserSync.init({
         server: {
             baseDir: "./"
         }
     });
-
-    // add browserSync.reload to the tasks array to make
-    // all browsers reload after tasks are complete.
-    gulp.watch("js/src/*.ts", ['tsc']).on("change", browserSync.reload)
+    gulp.watch("index.html").on("change", browserSync.reload)
+    gulp.watch("js/src/*.ts", ['tsc', 'tslint']).on("change", browserSync.reload)
     gulp.watch("css/src/*.scss", ['css']);
 });
