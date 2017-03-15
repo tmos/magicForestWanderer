@@ -1,3 +1,4 @@
+import * as $ from "jquery";
 import {empty, goal, monster, trap, tree} from "./constants";
 
 /**
@@ -10,7 +11,6 @@ export default class Floor {
     private goal: boolean = false;
     private monster: boolean = false;
     private tree: boolean = false;
-
     private trapClue: boolean = false;
     private monsterClue: boolean = false;
 
@@ -47,5 +47,32 @@ export default class Floor {
      */
     public killMonster() {
         this.monster = false;
+    }
+
+    public toHtml() {
+        let classes: string = "";
+
+        if (this.trap) {
+            classes += "trap";
+        } else if (this.goal) {
+            classes += "goal";
+        } else if (this.monster) {
+            classes += "monster";
+        } else if (this.tree) {
+            classes += "tree";
+        } else {
+            if (this.trapClue) {
+                classes += "trapClue";
+            }
+            if (this.monsterClue) {
+                classes += "monsterClue";
+            }
+        }
+
+        if (classes === "") {
+            classes += "empty";
+        }
+
+        return $(`<div class="${classes}"></div>`);
     }
 }

@@ -17,6 +17,7 @@ export default class Game {
      */
     constructor(playerY, playerX, darkWoods: Forest) {
         this.forest = darkWoods;
+
         const height = darkWoods.getForest().length;
         const width = darkWoods.getForest()[0].length;
 
@@ -25,6 +26,8 @@ export default class Game {
                 this.map[y][x] = new Floor();
             }
         }
+
+        return this;
     }
 
     /**
@@ -32,12 +35,26 @@ export default class Game {
      */
     public percieve() {
         this.map[this.y][this.x] = this.forest.getFloorContent(this.y, this.x);
+
+        return this;
     }
 
     /**
      * Think about what you want to do. But think carrefully.
      */
     public think() {
+        return this;
+    }
 
+    public move(y, x) {
+        if (y >= 0 && y < this.mapHeight) {
+            this.y = y;
+        }
+
+        if (x >= 0 && x < this.mapWidth) {
+            this.x = x;
+        }
+
+        return this;
     }
 }

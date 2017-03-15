@@ -17,6 +17,8 @@ export default class Forest {
     constructor(w = 4, h = 4) {
         this.width = w;
         this.height = h;
+
+        return this;
     }
 
     /**
@@ -39,6 +41,8 @@ export default class Forest {
                 }
             }
         }
+
+        return this;
     }
 
     /**
@@ -67,7 +71,7 @@ export default class Forest {
         if (y - 1 >= 0) {
             this.forest[y - 1][x].setClue(content);
         }
-        if (y + 1 < this.width) {
+        if (y + 1 < this.height) {
             this.forest[y + 1][x].setClue(content);
         }
         if (x - 1 >= 0) {
@@ -76,5 +80,7 @@ export default class Forest {
         if (y + 1 < this.width) {
             this.forest[y][x + 1].setClue(content);
         }
+
+        return this;
     }
 }
