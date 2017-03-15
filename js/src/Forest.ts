@@ -1,4 +1,5 @@
 import {trap, trapClue, empty, goal, monster, monsterClue, tree} from "./constants";
+import Floor from "./Floor";
 
 /**
  * A gloomy dark forest. There are lots of monsters and traps everywere. Be careful, wanderer...
