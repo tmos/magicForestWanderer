@@ -1,6 +1,6 @@
 import {deep, deepClue, empty, goal, monster, monsterClue, tree} from "./constants";
 
-export class Forest {
+export default class Forest {
     /**
      * Create a new forest
      * @param {*} width The width of the forest
