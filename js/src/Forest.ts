@@ -5,7 +5,7 @@ import Floor from "./Floor";
  * A gloomy dark forest. There are lots of monsters and traps here. Be careful, wanderer...
  */
 export default class Forest {
-    private forest: number[] = [];
+    private forest: Floor[][] = [];
     private width: number = 0;
     private height: number = 0;
 
@@ -24,14 +24,16 @@ export default class Forest {
      * @param {*} maxChances The chances
      */
     public populate(maxChances = 50) {
-        for (let line = 0; line < this.width; line++) {
-            for (let square = 0; square < this.height; square++) {
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
                 let tmpRand = Math.random() * (maxChances - 0) + 0;
 
                 if (tmpRand === 0) {
-                    //@todo: populate using constants
+                    //It's a monster
+                    this.forest[y][x] = new Floor(monster);
                 } else if (tmpRand === 1) {
-                    //@todo: populate using constants
+                    //It's a trap
+                    this.forest[y][x] = new Floor(trap);
                 }
             }
 
