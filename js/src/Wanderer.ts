@@ -55,6 +55,8 @@ export default class Wanderer {
             // @todo
         }
         // @todo
+
+        return this;
     }
 
     public move(y, x) {
@@ -69,7 +71,7 @@ export default class Wanderer {
         // Verify Floor
         let thisFloor = this.map[this.y][this.x];
         if (thisFloor.isGoal()) {
-        // @todo Do move
+            // @todo Do move
             // Oo-De-Lally!!
             // @todo New forest
         } else if (thisFloor.isMonster() || thisFloor.isTrap()) {
