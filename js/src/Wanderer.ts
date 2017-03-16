@@ -11,9 +11,9 @@ export default class Game {
 
     /**
      * The matrix, where every wanderers are born.
-     * @param playerY
-     * @param playerX
-     * @param darkWoods
+     * @param {*} playerY The y position of the wanderer
+     * @param {*} playerX The x position of the wanderer
+     * @param {Forest} darkWoods The forest
      */
     constructor(playerY, playerX, darkWoods: Forest) {
         this.forest = darkWoods;
@@ -30,7 +30,7 @@ export default class Game {
     /**
      * Look what is under your feets, wanderer. And take care...
      */
-    public percieve() {
+    public perceive() {
         this.map[this.y][this.x] = this.forest.getFloorContent(this.y, this.x);
     }
 
@@ -38,6 +38,15 @@ export default class Game {
      * Think about what you want to do. But think carrefully.
      */
     public think() {
-
+        let thisFloor = this.map[this.y][this.x];
+        if (thisFloor.isGoal()) {
+            // Oo-De-Lally!!
+            // @todo
+        } else if (thisFloor.isMonster() || thisFloor.isTrap()) {
+            // Too much, too soon, too far to go, too late to play, the game is over
+            // @todo
+        } else if (thisFloor.isMonsterClue() || thisFloor.isTrapClue()) {
+            // @todo
+        }
     }
 }

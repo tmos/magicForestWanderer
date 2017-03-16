@@ -11,17 +11,17 @@ export default class Forest {
 
     /**
      * Create a new forest
-     * @param {*} w The width of the forest
-     * @param {*} h The height of the forest
+     * @param {number} w The width of the forest
+     * @param {number} h The height of the forest
      */
-    constructor(w = 4, h = 4) {
+    constructor(w = 3, h = 3) {
         this.width = w;
         this.height = h;
     }
 
     /**
      * Populate the forest randomly
-     * @param {*} maxChances The chances
+     * @param {number} maxChances The chances
      */
     public populate(maxChances = 50) {
         for (let y = 0; y < this.height; y++) {
@@ -43,8 +43,8 @@ export default class Forest {
 
     /**
      * Get the content of the floor
-     * @param y Y
-     * @param x X
+     * @param {number} y The y parameter of this floor
+     * @param {number} x The x parameter of this floor
      */
     public getFloorContent(y: number, x: number) {
         return this.forest[y][x];
@@ -59,9 +59,9 @@ export default class Forest {
 
     /**
      * Set the clues around the main items of the game
-     * @param y Y
-     * @param x X
-     * @param content The content from the constants
+     * @param {number} y The y parameter of the item
+     * @param {number} x The x parameter of the item
+     * @param {string} content The content from the constants
      */
     private setClues(y: number, x: number, content: string) {
         if (y - 1 >= 0) {
