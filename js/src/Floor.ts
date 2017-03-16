@@ -27,8 +27,9 @@ export default class Floor {
             this.monster = true;
         } else if (element === tree) {
             this.tree = true;
+        } else {
+            // The floor is empty otherwise
         }
-        // The floor is empty otherwise
     }
 
     /**
@@ -95,27 +96,25 @@ export default class Floor {
     public toHtml() {
         let classes: string = "";
 
-        if (this.trap) {
-            classes += "trap";
-        } else if (this.goal) {
-            classes += "goal";
-        } else if (this.monster) {
-            classes += "monster";
+        if (this.isTrap) {
+            classes += "trap ";
+        } else if (this.isGoal) {
+            classes += "goal ";
+        } else if (this.isMonster) {
+            classes += "monster ";
         } else if (this.tree) {
-            classes += "tree";
+            classes += "tree ";
         } else {
-            if (this.trapClue) {
-                classes += "trapClue";
+            if (this.isTrapClue) {
+                classes += "trapClue ";
             }
-            if (this.monsterClue) {
-                classes += "monsterClue";
+            if (this.isMonsterClue) {
+                classes += "monsterClue ";
             }
         }
 
-        if (classes === "") {
-            classes += "empty";
-        }
+        classes += "floorCase ";
 
-        return $(`<div class="${classes}"></div>`);
+        return `<div class="${classes}"></div>`;
     }
 }

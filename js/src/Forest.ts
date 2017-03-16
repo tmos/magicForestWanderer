@@ -17,30 +17,35 @@ export default class Forest {
     constructor(w = 3, h = 3) {
         this.width = w;
         this.height = h;
-
-        return this;
     }
 
     /**
      * Populate the forest randomly.
      * @param {number} maxChances The chances
      */
-    public populate(maxChances = 50) {
+    public populate(maxChances = 20) {
+        let tmp: Floor[][] = [];
+
         for (let y = 0; y < this.height; y++) {
+            tmp[y] = [];
             for (let x = 0; x < this.width; x++) {
                 const tmpRand = Math.random() * (maxChances - 0) + 0;
 
                 if (tmpRand === 0) {
                     // It's a monster!
-                    this.forest[y][x] = new Floor(monster);
+                    tmp[y][x] = new Floor(monster);
                     this.setClues(y, x, monster);
                 } else if (tmpRand === 1) {
                     // It's a trap!
-                    this.forest[y][x] = new Floor(trap);
+                    tmp[y][x] = new Floor(trap);
                     this.setClues(y, x, trap);
+                } else {
+                    tmp[y][x] = new Floor(trap);
                 }
             }
         }
+
+        this.forest = tmp;
 
         return this;
     }

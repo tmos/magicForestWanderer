@@ -27,6 +27,7 @@ body {
   font-family: sans-serif;
   line-height: 1.4; }
 
+/** vars */
 /** Global styles */
 body {
   background-image: url("../assets/dark_wood.png"); }
@@ -45,5 +46,26 @@ body {
     padding: 1rem; }
 
 /** Game Board */
+#gameWrapper {
+  position: relative; }
+
+#game {
+  display: block;
+  margin: 3rem auto; }
+  #game.width3 {
+    width: 180px;
+    height: 180px; }
+  #game .row {
+    width: 100%;
+    display: flex; }
+  #game .floorCase {
+    flex: 1;
+    display: block;
+    background-color: #333;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #FFF;
+    border-left: none;
+    border-top: none; }
 
 /*# sourceMappingURL=sourcemaps/styles.css.map */

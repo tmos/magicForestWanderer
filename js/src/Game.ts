@@ -1,3 +1,4 @@
+import * as $ from "jquery";
 import Forest from "./Forest";
 
 /**
@@ -10,7 +11,7 @@ export default class Game {
      * Create the game.
      */
     constructor() {
-        return this;
+        //
     }
 
     /**
@@ -28,5 +29,23 @@ export default class Game {
      */
     public getForest() {
         return this.forest;
+    }
+
+    public render(idElem: string) {
+        const gameDiv = document.getElementById(idElem);
+        const forest = this.getForest().getForest();
+
+        let html: string = "";
+
+        for (let line of forest) {
+            html += "<div class=\"row\">";
+            for (let floor of line) {
+                console.log(floor);
+                html += floor.toHtml();
+            }
+            html += "</div>";
+        }
+        gameDiv.classList.add(`width${forest.length}`);
+        gameDiv.innerHTML = html;
     }
 }

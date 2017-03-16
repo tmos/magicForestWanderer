@@ -3,6 +3,9 @@
 @import "__fonts";
 @import "__base";
 
+/** vars */
+$largeurCase : 60;
+
 /** Global styles */
 body {
     background-image: url("../assets/dark_wood.png")
@@ -23,5 +26,33 @@ body {
     }
 }
 
-
 /** Game Board */
+
+#gameWrapper {
+    position: relative
+}
+#game {
+    display: block;
+    margin: 3rem auto;
+
+    &.width3 {
+        width: $largeurCase*3px;
+        height: $largeurCase*3px;
+    }
+
+    .row {
+        width: 100%;
+        display: flex;
+    }
+
+    .floorCase {
+        flex:1;
+        display: block;
+        background-color: #333;
+        width: $largeurCase+px;
+        height: $largeurCase+px;
+        border: 1px solid #FFF;
+        border-left: none;
+        border-top: none;
+    }
+}
