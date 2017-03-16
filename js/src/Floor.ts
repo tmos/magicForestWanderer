@@ -15,7 +15,7 @@ export default class Floor {
     private monsterClue: boolean = false;
 
     /**
-     * Create a new floor
+     * Create a new floor.
      * @param {string} element The element on the floor, must be selected into constants
      */
     constructor(element = empty) {
@@ -74,7 +74,7 @@ export default class Floor {
     }
 
     /**
-     * Set a clue on the floor
+     * Set a clue on the floor.
      * @param {string} clueType The type of clue on the floor, must be selected into constants
      */
     public setClue(clueType: string) {
@@ -86,7 +86,7 @@ export default class Floor {
     }
 
     /**
-     * CLINK! The wanderer have used his slingshot to kill the monster
+     * CLINK! The wanderer have used his slingshot to kill the monster.
      */
     public killMonster() {
         this.monster = false;

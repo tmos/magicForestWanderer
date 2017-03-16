@@ -10,7 +10,7 @@ export default class Forest {
     private height: number = 0;
 
     /**
-     * Create a new forest
+     * Create a new forest.
      * @param {number} w The width of the forest
      * @param {number} h The height of the forest
      */
@@ -20,7 +20,7 @@ export default class Forest {
     }
 
     /**
-     * Populate the forest randomly
+     * Populate the forest randomly.
      * @param {number} maxChances The chances
      */
     public populate(maxChances = 50) {
@@ -29,11 +29,11 @@ export default class Forest {
                 const tmpRand = Math.random() * (maxChances - 0) + 0;
 
                 if (tmpRand === 0) {
-                    // It's a monster
+                    // It's a monster!
                     this.forest[y][x] = new Floor(monster);
                     this.setClues(y, x, monster);
                 } else if (tmpRand === 1) {
-                    // It's a trap
+                    // It's a trap!
                     this.forest[y][x] = new Floor(trap);
                     this.setClues(y, x, trap);
                 }
@@ -42,7 +42,7 @@ export default class Forest {
     }
 
     /**
-     * Get the content of the floor
+     * Get the content of the floor.
      * @param {number} y The y parameter of this floor
      * @param {number} x The x parameter of this floor
      */
@@ -51,14 +51,14 @@ export default class Forest {
     }
 
     /**
-     * Get da woods
+     * Get da woods!
      */
     public getForest() {
         return this.forest;
     }
 
     /**
-     * Set the clues around the main items of the game
+     * Set the clues around the main items of the game.
      * @param {number} y The y parameter of the item
      * @param {number} x The x parameter of the item
      * @param {string} content The content from the constants
