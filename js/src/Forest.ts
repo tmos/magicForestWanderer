@@ -10,11 +10,11 @@ export default class Forest {
     private height: number = 0;
 
     /**
-     * Create a new forest
-     * @param {*} w The width of the forest
-     * @param {*} h The height of the forest
+     * Create a new forest.
+     * @param {number} w The width of the forest
+     * @param {number} h The height of the forest
      */
-    constructor(w = 4, h = 4) {
+    constructor(w = 3, h = 3) {
         this.width = w;
         this.height = h;
 
@@ -22,8 +22,8 @@ export default class Forest {
     }
 
     /**
-     * Populate the forest randomly
-     * @param {*} maxChances The chances
+     * Populate the forest randomly.
+     * @param {number} maxChances The chances
      */
     public populate(maxChances = 50) {
         for (let y = 0; y < this.height; y++) {
@@ -31,11 +31,11 @@ export default class Forest {
                 const tmpRand = Math.random() * (maxChances - 0) + 0;
 
                 if (tmpRand === 0) {
-                    // It's a monster
+                    // It's a monster!
                     this.forest[y][x] = new Floor(monster);
                     this.setClues(y, x, monster);
                 } else if (tmpRand === 1) {
-                    // It's a trap
+                    // It's a trap!
                     this.forest[y][x] = new Floor(trap);
                     this.setClues(y, x, trap);
                 }
@@ -46,26 +46,26 @@ export default class Forest {
     }
 
     /**
-     * Get the content of the floor
-     * @param y Y
-     * @param x X
+     * Get the content of the floor.
+     * @param {number} y The y parameter of this floor
+     * @param {number} x The x parameter of this floor
      */
     public getFloorContent(y: number, x: number) {
         return this.forest[y][x];
     }
 
     /**
-     * Get da woods
+     * Get da woods!
      */
     public getForest() {
         return this.forest;
     }
 
     /**
-     * Set the clues around the main items of the game
-     * @param y Y
-     * @param x X
-     * @param content The content from the constants
+     * Set the clues around the main items of the game.
+     * @param {number} y The y parameter of the item
+     * @param {number} x The x parameter of the item
+     * @param {string} content The content from the constants
      */
     private setClues(y: number, x: number, content: string) {
         if (y - 1 >= 0) {

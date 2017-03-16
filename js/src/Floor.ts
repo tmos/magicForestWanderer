@@ -15,8 +15,8 @@ export default class Floor {
     private monsterClue: boolean = false;
 
     /**
-     * Create a new floor
-     * @param {*} element The element on the floor, must be selected into ./constants.ts
+     * Create a new floor.
+     * @param {string} element The element on the floor, must be selected into constants
      */
     constructor(element = empty) {
         if (element === trap) {
@@ -32,7 +32,50 @@ export default class Floor {
     }
 
     /**
-     * Set a clue on the floor
+     * Is it a trap?
+     */
+    public isTrap() {
+        return this.trap;
+    }
+
+    /**
+     * Is it the goal?
+     */
+    public isGoal() {
+        return this.goal;
+    }
+
+    /**
+     * Is it a monster?
+     */
+    public isMonster() {
+        return this.monster;
+    }
+
+    /**
+     * Is it a tree?
+     */
+    public isTree() {
+        return this.tree;
+    }
+
+    /**
+     * Is it a monster clue?
+     */
+    public isMonsterClue() {
+        return this.monsterClue;
+    }
+
+    /**
+     * Is it a trap clue?
+     */
+    public isTrapClue() {
+        return this.trapClue;
+    }
+
+    /**
+     * Set a clue on the floor.
+     * @param {string} clueType The type of clue on the floor, must be selected into constants
      */
     public setClue(clueType: string) {
         if (clueType === trap) {
@@ -43,7 +86,7 @@ export default class Floor {
     }
 
     /**
-     * CLINK! The wanderer have used his slingshot to kill the monster
+     * CLINK! The wanderer have used his slingshot to kill the monster.
      */
     public killMonster() {
         this.monster = false;
