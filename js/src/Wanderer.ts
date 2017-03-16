@@ -8,8 +8,7 @@ export default class Wanderer {
     private forest: Forest;
     private mapWidth: number;
     private mapHeight: number;
-    private map: Floor[][];
-    private numberVisited: number;
+    private map: Floor[][]; // The map the wanderer draws during his adventure
     private y: number;
     private x: number;
     private score: number;
@@ -25,7 +24,6 @@ export default class Wanderer {
 
         const height = darkWoods.getForest().length;
         const width = darkWoods.getForest()[0].length;
-        this.numberVisited = 0;
         this.score = 0;
 
         for (let y; y < height; y++) {
