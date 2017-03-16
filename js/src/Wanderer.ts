@@ -75,8 +75,8 @@ export default class Wanderer {
      * @param {number} x The x position of the target
      */
     public useSlingshot(y, x) {
-        if (this.forest.getFloorContent(this.y, this.x).isMonster()) {
-            this.forest.getFloorContent(this.y, this.x).killMonster();
+        if (this.forest.getFloorContent(y, x).isMonster()) {
+            this.forest.getFloorContent(y, x).killMonster();
             // @todo Call animation
         }
     }
