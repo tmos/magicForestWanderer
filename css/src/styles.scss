@@ -2,9 +2,7 @@
 
 @import "__fonts";
 @import "__base";
-
-/** vars */
-$largeurCase : 60;
+@import "__vars";
 
 /** Global styles */
 body {
@@ -42,17 +40,29 @@ body {
 
     .row {
         width: 100%;
-        display: flex;
     }
 
     .floorCase {
-        flex:1;
+        float:left;
         display: block;
         background-color: #333;
         width: $largeurCase+px;
         height: $largeurCase+px;
-        border: 1px solid #FFF;
-        border-left: none;
-        border-top: none;
+
+        // &.warFog {
+        //     background-color: black!important;
+        // }
+        &.trapClue {
+            background-color: orange;
+        }
+        &.trap {
+            background-color: red;
+        }
+        &.goal {
+            background-color: darkturquoise;
+        }
+        &.wanderer {
+            background-color: green;
+        }
     }
 }

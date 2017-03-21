@@ -14,10 +14,6 @@ export default class Floor {
     private trapClue: boolean = false;
     private monsterClue: boolean = false;
 
-    /**
-     * Create a new floor.
-     * @param {string} element The element on the floor, must be selected into constants
-     */
     constructor(element = empty) {
         if (element === trap) {
             this.trap = true;
@@ -32,52 +28,41 @@ export default class Floor {
         }
     }
 
-    /**
-     * Is it a trap?
-     */
     public isTrap() {
         return this.trap;
     }
 
-    /**
-     * Is it the goal?
-     */
     public isGoal() {
         return this.goal;
     }
 
-    /**
-     * Is it a monster?
-     */
     public isMonster() {
         return this.monster;
     }
 
-    /**
-     * Is it a tree?
-     */
     public isTree() {
         return this.tree;
     }
 
-    /**
-     * Is it a monster clue?
-     */
     public isMonsterClue() {
         return this.monsterClue;
     }
 
-    /**
-     * Is it a trap clue?
-     */
     public isTrapClue() {
         return this.trapClue;
     }
 
-    /**
-     * Set a clue on the floor.
-     * @param {string} clueType The type of clue on the floor, must be selected into constants
-     */
+    public isEmpty() {
+        if (!this.trap &&
+            !this.goal &&
+            !this.monster &&
+            !this.tree &&
+            !this.trapClue &&
+            !this.monsterClue) {
+                return true;
+            }
+    }
+
     public setClue(clueType: string) {
         if (clueType === trap) {
             this.trapClue = true;
@@ -86,35 +71,38 @@ export default class Floor {
         }
     }
 
-    /**
-     * CLINK! The wanderer have used his slingshot to kill the monster.
-     */
     public killMonster() {
         this.monster = false;
     }
 
-    public toHtml() {
-        let classes: string = "";
+    public toHtml(isKnown: boolean = true, additionnalClasses: string[]) {
+        let classes: string[] = ["floorCase"].concat(additionnalClasses);
 
-        if (this.isTrap) {
-            classes += "trap ";
-        } else if (this.isGoal) {
-            classes += "goal ";
-        } else if (this.isMonster) {
-            classes += "monster ";
-        } else if (this.tree) {
-            classes += "tree ";
+        if (isKnown) {
+            classes.push("visited");
         } else {
-            if (this.isTrapClue) {
-                classes += "trapClue ";
-            }
-            if (this.isMonsterClue) {
-                classes += "monsterClue ";
-            }
+            classes.push("warFog");
         }
 
-        classes += "floorCase ";
+        if (this.isTrap()) {
+            classes.push("trap");
+        }
+        if (this.isGoal()) {
+            classes.push("goal");
+        }
+        if (this.isMonster()) {
+            classes.push("monster");
+        }
+        if (this.isTree()) {
+            classes.push("tree");
+        }
+        if (this.isTrapClue()) {
+            classes.push("trapClue");
+        }
+        if (this.isMonsterClue()) {
+            classes.push("monsterClue");
+        }
 
-        return `<div class="${classes}"></div>`;
+        return `<div class="${classes.join(" ")}"></div>`;
     }
 }

@@ -54,13 +54,13 @@ gulp.task("css", () =>{
 })
 
 
-gulp.task('default', ['tsc'], () => {
+gulp.task('default', ['tsc', 'css', 'tslint'], () => {
     browserSync.init({
         server: {
             baseDir: "./"
         }
     });
     gulp.watch("index.html").on("change", browserSync.reload)
-    gulp.watch("js/src/*.ts", ['tsc', 'tslint']).on("change", browserSync.reload)
+    gulp.watch("js/src/*.ts", ['tsc']).on("change", browserSync.reload)
     gulp.watch("css/src/*.scss", ['css']);
 });

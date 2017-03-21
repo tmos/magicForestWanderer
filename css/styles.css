@@ -27,7 +27,6 @@ body {
   font-family: sans-serif;
   line-height: 1.4; }
 
-/** vars */
 /** Global styles */
 body {
   background-image: url("../assets/dark_wood.png"); }
@@ -56,16 +55,20 @@ body {
     width: 180px;
     height: 180px; }
   #game .row {
-    width: 100%;
-    display: flex; }
+    width: 100%; }
   #game .floorCase {
-    flex: 1;
+    float: left;
     display: block;
     background-color: #333;
     width: 60px;
-    height: 60px;
-    border: 1px solid #FFF;
-    border-left: none;
-    border-top: none; }
+    height: 60px; }
+    #game .floorCase.trapClue {
+      background-color: orange; }
+    #game .floorCase.trap {
+      background-color: red; }
+    #game .floorCase.goal {
+      background-color: darkturquoise; }
+    #game .floorCase.wanderer {
+      background-color: green; }
 
 /*# sourceMappingURL=sourcemaps/styles.css.map */

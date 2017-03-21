@@ -4,7 +4,10 @@
   "description": "🌲🌲🌲🚪🏃🍃🕳💩👿🌲🌲🌲",
   "main": "index.js",
   "scripts": {
-    "test": "ava js/src/test/*"
+    "test": "ava js/src/test/*",
+    "lint": "tslint js/src/*.ts",
+    "watch": "gulp"
+
   },
   "repository": {
     "type": "git",
@@ -29,6 +32,7 @@
     "gulp-typescript": "^3.1.5",
     "gulp-util": "^3.0.8",
     "jquery": "^3.1.1",
+    "rpgui": "^1.0.3",
     "tsify": "^3.0.1",
     "tslint": "^4.5.1",
     "typescript": "^2.2.1",
