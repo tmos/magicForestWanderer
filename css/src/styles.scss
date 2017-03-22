@@ -33,10 +33,10 @@ body {
     display: block;
     margin: 3rem auto;
 
-    &.width3 {
-        width: $largeurCase*3px;
-        height: $largeurCase*3px;
+    @for $i from 1 through 42 {
+        &.width#{$i} { width: 60px * $i; height: 60px * $i; }
     }
+
 
     .row {
         width: 100%;

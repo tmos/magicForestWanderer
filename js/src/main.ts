@@ -2,11 +2,8 @@ import * as $ from "jquery";
 import * as jsboard from "./Forest";
 import Game from "./Game";
 
-let g = new Game();
-g.createForest();
-g.getForest().populate();
-g.setWanderer();
-g.render("game");
+let g = new Game("game");
+g.init();
 
 // Init manual game
 document.onkeydown = (e) => {
@@ -26,5 +23,5 @@ document.onkeydown = (e) => {
         default:
             break;
     }
-    g.render("game");
+    g.iterate();
 };

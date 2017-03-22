@@ -74,6 +74,17 @@ export default class Forest {
         return this.forest;
     }
 
+    public getWayOutPosition() {
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                if (this.forest[y][x].isGoal()) {
+                    return {x, y};
+                }
+            }
+        }
+        return undefined;
+    }
+
     private setClues(y: number, x: number, content: string) {
         if (y - 1 >= 0) {
             this.forest[y - 1][x].setClue(content);

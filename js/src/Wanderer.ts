@@ -109,4 +109,14 @@ export default class Wanderer {
             // @todo Call animation
         }
     }
+
+    public isOut(): boolean {
+        const wayOutPosition = this.forest.getWayOutPosition();
+
+        if (this.x === wayOutPosition.x && this.y === wayOutPosition.y) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

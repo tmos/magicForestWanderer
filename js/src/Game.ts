@@ -8,7 +8,17 @@ import Wanderer from "./Wanderer";
 export default class Game {
     private currentForest: Forest;
     private wanderer: Wanderer;
+    private gameDiv: string;
 
+    public constructor(gameDiv: string) {
+        this.gameDiv = gameDiv;
+    }
+    public init(w = 3, h = 3) {
+        this.createForest(w, h);
+        this.getForest().populate();
+        this.setWanderer();
+        this.render();
+    }
     public createForest(w = 3, h = 3): Game {
         this.currentForest = new Forest(w, h);
         return this;
@@ -44,8 +54,8 @@ export default class Game {
         return this.wanderer;
     }
 
-    public render(idElem: string) {
-        const gameDiv = document.getElementById(idElem);
+    public render() {
+        const gameDiv = document.getElementById(this.gameDiv);
         const forest = this.getForest().getForest();
         const wanderer = this.wanderer;
 
@@ -66,9 +76,17 @@ export default class Game {
             }
             html += "</div>";
         }
-
+        gameDiv.className = "";
         gameDiv.classList.add(`width${forest.length}`);
         gameDiv.innerHTML = html;
+    }
+
+    public iterate() {
+        if (this.wanderer.isOut()) {
+            const newSize = this.getForest().getForest().length + 1;
+            this.init(newSize, newSize);
+        }
+        this.render();
     }
 
 }
