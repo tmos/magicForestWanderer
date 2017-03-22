@@ -13,8 +13,9 @@ export default class Wanderer {
     private x: number;
     private score: number;
 
-    constructor(playerY: number, playerX: number, darkWoods: Forest) {
+    constructor(playerY: number, playerX: number, darkWoods: Forest, score: number = 0) {
         this.forest = darkWoods;
+        this.score = score;
         this.x = playerX;
         this.y = playerY;
 
@@ -23,8 +24,6 @@ export default class Wanderer {
 
         this.forestMapHeight = height;
         this.forestMapWidth = width;
-
-        this.score = 0;
 
         for (let y = 0; y < height; y++) {
             this.forestMap[y] = [];
@@ -40,6 +39,15 @@ export default class Wanderer {
         return this.forestMap[y][x] !== null;
     }
 
+    public setForest(forest: Forest) {
+        this.forest = forest;
+    }
+
+    public setPosition(y: number, x: number) {
+        this.x = x;
+        this.y = y;
+    }
+
     public getPosition() {
         return {x: this.x, y: this.y};
     }
@@ -49,9 +57,10 @@ export default class Wanderer {
     }
 
     public perceive() {
-        this.forestMap[this.y][this.x] = this.forest.getFloorContent(this.y, this.x);
+        const content = this.forest.getFloorContent(this.y, this.x);
+        this.forestMap[this.y][this.x] = content;
 
-        return this;
+        return content;
     }
 
     public think() {
@@ -118,5 +127,21 @@ export default class Wanderer {
         } else {
             return false;
         }
+    }
+
+    public isDead(): boolean {
+        if (this.perceive().isTrap()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public setScore(val: number) {
+        this.score += val;
+    }
+
+    public getScore(): number {
+        return this.score;
     }
 }

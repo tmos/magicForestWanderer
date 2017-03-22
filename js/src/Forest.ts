@@ -66,7 +66,7 @@ export default class Forest {
         return this;
     }
 
-    public getFloorContent(y: number, x: number) {
+    public getFloorContent(y: number, x: number): Floor {
         return this.forest[y][x];
     }
 

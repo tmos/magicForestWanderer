@@ -29,7 +29,7 @@ body {
 #gameWrapper {
     position: relative
 }
-#game {
+#gameDiv {
     display: block;
     margin: 3rem auto;
 
@@ -65,4 +65,9 @@ body {
             background-color: green;
         }
     }
+}
+#scoreDiv {
+    text-align: center;
+    font-size: 3rem;
+    color:white;
 }

@@ -8,28 +8,50 @@ import Wanderer from "./Wanderer";
 export default class Game {
     private currentForest: Forest;
     private wanderer: Wanderer;
-    private gameDiv: string;
+    private gameDiv: HTMLElement;
+    private scoreDiv: HTMLElement;
 
-    public constructor(gameDiv: string) {
-        this.gameDiv = gameDiv;
+    public constructor(gameDiv: string, scoreDiv: string) {
+        this.gameDiv = document.getElementById(gameDiv);
+        this.scoreDiv = document.getElementById(scoreDiv);
     }
+
     public init(w = 3, h = 3) {
         this.createForest(w, h);
         this.getForest().populate();
         this.setWanderer();
         this.render();
     }
-    public createForest(w = 3, h = 3): Game {
+
+    public update() {
+        if (this.wanderer.isDead()) {
+            this.wanderer.setScore(-10000);
+        }
+        if (this.wanderer.isOut()) {
+            // You just won this forest !
+            this.wanderer.setScore(1000);
+            // Create the next level
+            const newSize = this.getForest().getForest().length + 1;
+            this.init(newSize, newSize);
+        }
+        this.render();
+    }
+
+    public getWanderer() {
+        return this.wanderer;
+    }
+
+    private createForest(w = 3, h = 3): Game {
         this.currentForest = new Forest(w, h);
         return this;
     }
 
-    public getForest(): Forest {
+    private getForest(): Forest {
         return this.currentForest;
     }
 
-    public setWanderer(): Game {
-        const forest = this.currentForest;
+    private setWanderer(): Game {
+        const forest = this.currentForest.getForest();
 
         if (!forest) {
             return undefined;
@@ -38,24 +60,24 @@ export default class Game {
         let y;
         let x;
         while (!isOk) {
-            y = Math.floor(Math.random() * (forest.getForest().length - 0) + 0);
-            x = Math.floor(Math.random() * (forest.getForest()[0].length - 0) + 0);
+            y = Math.floor(Math.random() * (forest.length - 0) + 0);
+            x = Math.floor(Math.random() * (forest[0].length - 0) + 0);
 
-            if (forest.getForest()[y][x].isEmpty) {
+            if (forest[y][x].isEmpty) {
                 isOk = true;
             }
         }
-        this.wanderer = new Wanderer(y, x, forest);
+        let oldScore = 0;
+        if (this.wanderer) {
+            oldScore = this.wanderer.getScore();
+        }
+        this.wanderer = new Wanderer(y, x, this.currentForest, oldScore);
+
 
         return this;
     }
 
-    public getWanderer() {
-        return this.wanderer;
-    }
-
-    public render() {
-        const gameDiv = document.getElementById(this.gameDiv);
+    private render() {
         const forest = this.getForest().getForest();
         const wanderer = this.wanderer;
 
@@ -76,17 +98,12 @@ export default class Game {
             }
             html += "</div>";
         }
-        gameDiv.className = "";
-        gameDiv.classList.add(`width${forest.length}`);
-        gameDiv.innerHTML = html;
-    }
 
-    public iterate() {
-        if (this.wanderer.isOut()) {
-            const newSize = this.getForest().getForest().length + 1;
-            this.init(newSize, newSize);
-        }
-        this.render();
+        this.gameDiv.className = "";
+        this.gameDiv.classList.add(`width${forest.length}`);
+        this.gameDiv.innerHTML = html;
+
+        this.scoreDiv.innerHTML = wanderer.getScore().toString();
     }
 
 }
