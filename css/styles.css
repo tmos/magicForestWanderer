@@ -185,6 +185,10 @@ body {
     background-color: #333;
     width: 60px;
     height: 60px; }
+    #gameDiv .floorCase.monster {
+      background-color: purple; }
+    #gameDiv .floorCase.monsterClue {
+      background-color: mediumpurple; }
     #gameDiv .floorCase.trapClue {
       background-color: orange; }
     #gameDiv .floorCase.trap {
@@ -192,9 +196,20 @@ body {
     #gameDiv .floorCase.goal {
       background-color: darkturquoise; }
     #gameDiv .floorCase.wanderer {
-      background-color: green; }
+      background-color: greenyellow;
+      border: 10px solid #333; }
+      #gameDiv .floorCase.wanderer.trapClue {
+        border-color: orange; }
+      #gameDiv .floorCase.wanderer.trap {
+        border-color: red; }
+      #gameDiv .floorCase.wanderer.goal {
+        border-color: darkturquoise; }
+      #gameDiv .floorCase.wanderer.monster {
+        border-color: purple; }
+      #gameDiv .floorCase.wanderer.monsterClue {
+        border-color: mediumpurple; }
 
-#scoreDiv {
+#logDiv {
   text-align: center;
   font-size: 3rem;
   color: white; }

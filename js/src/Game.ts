@@ -25,11 +25,12 @@ export default class Game {
 
     public update() {
         if (this.wanderer.isDead()) {
-            this.wanderer.setScore(-10000);
+            alert('You die.');
+            this.wanderer.setScore(-(10 * this.getForest().getNumberOfCases()));
         }
         if (this.wanderer.isOut()) {
             // You just won this forest !
-            this.wanderer.setScore(1000);
+            this.wanderer.setScore(10 * this.getForest().getNumberOfCases());
             // Create the next level
             const newSize = this.getForest().getForest().length + 1;
             this.init(newSize, newSize);

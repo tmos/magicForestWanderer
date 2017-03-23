@@ -85,6 +85,10 @@ export default class Forest {
         return undefined;
     }
 
+    public getNumberOfCases() {
+        return this.forest.length * this.forest[0].length;
+    }
+
     private setClues(y: number, x: number, content: string) {
         if (y - 1 >= 0) {
             this.forest[y - 1][x].setClue(content);

@@ -49,9 +49,15 @@ body {
         width: $largeurCase+px;
         height: $largeurCase+px;
 
-        // &.warFog {
-        //     background-color: black!important;
-        // }
+        &.warFog {
+            //background-color: black!important;
+        }
+        &.monster {
+            background-color: purple;
+        }
+        &.monsterClue {
+            background-color: mediumpurple;
+        }
         &.trapClue {
             background-color: orange;
         }
@@ -62,11 +68,29 @@ body {
             background-color: darkturquoise;
         }
         &.wanderer {
-            background-color: green;
+            background-color: greenyellow;
+            border: 10px solid #333;
+
+            &.trapClue {
+                border-color: orange;
+            }
+            &.trap {
+                border-color: red;
+            }
+            &.goal {
+                border-color: darkturquoise;
+            }
+            &.monster {
+                border-color: purple;
+            }
+            &.monsterClue {
+                border-color: mediumpurple;
+            }
         }
     }
 }
-#scoreDiv {
+
+#logDiv {
     text-align: center;
     font-size: 3rem;
     color:white;

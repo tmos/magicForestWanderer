@@ -98,16 +98,7 @@ export default class Wanderer {
                 break;
         }
 
-        // Verify Floor
-        // let thisFloor = this.forestMap[this.y][this.x];
-        // if (thisFloor.isGoal()) {
-        //     // @todo Do move
-        //     // Oo-De-Lally!!
-        //     // @todo New forest
-        // } else if (thisFloor.isMonster() || thisFloor.isTrap()) {
-        //     // Too much, too soon, too far to go, too late to play, the game is over
-        //     // @todo Wanderer die
-        // }
+        this.setScore(-10);
 
         return this;
     }
