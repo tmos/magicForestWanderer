@@ -118,10 +118,6 @@ export default class Floor {
         this.probabilityTrap += probability;
     }
 
-
-    /**
-     * CLINK! The wanderer have used his slingshot to kill the monster.
-     */
     public killMonster() {
         this.monster = false;
     }

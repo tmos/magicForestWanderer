@@ -1,5 +1,6 @@
 import Floor from "./Floor";
 import Forest from "./Forest";
+import "jsprolog";
 
 /**
  * The wanderer, the hero of this quest. Good luck son...
@@ -132,18 +133,10 @@ export default class Wanderer {
         return content;
     }
 
-    /**
-     * Think about what you want to do. But think carrefully.
-     */
     public think() {
         let thisFloor = this.forestMap[this.y][this.x];
         
         // Here goes all the logical stuff
-        for (let j = 0 ; j < this.getMapHeight() ; j++) {
-            for (let i = 0 ; i < this.getMapWidth() ; i++) {
-                // @todo
-            }
-        }
         
         return this;
     }
@@ -178,12 +171,7 @@ export default class Wanderer {
         return this;
     }
 
-    /**
-     * How many adjacent floors are already visited?
-     * @param {number} y The y position of the floor
-     * @param {number} x The x position of the floor
-     */
-    public numberAdjacentVisited(y, x) {
+    public numberAdjacentVisited(y: number, x: number) {
         let number = 0;
         if (!this.forestMap[this.y + 1][this.x].isTree() && this.forestMap[this.y + 1][this.x].isVisited) {
             number += 1;
