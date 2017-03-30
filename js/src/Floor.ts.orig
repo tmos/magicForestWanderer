@@ -14,11 +14,18 @@ export default class Floor {
     private trapClue: boolean = false;
     private monsterClue: boolean = false;
 
+<<<<<<< HEAD
     public isVisited: boolean = false;
     public isAccessible: boolean = false;
     private probabilityMonster = 0;
     private probabilityTrap = 0;
 
+    /**
+     * Create a new floor.
+     * @param {string} element The element on the floor, must be selected into constants
+     */
+=======
+>>>>>>> 62a616670e05a4fbeef43d4c97b3dfc7e2fd9925
     constructor(element = empty) {
         if (element === trap) {
             this.trap = true;
@@ -76,6 +83,7 @@ export default class Floor {
         }
     }
 
+<<<<<<< HEAD
     /**
      * What is the probability this floor is a monster?
      */
@@ -122,6 +130,8 @@ export default class Floor {
     /**
      * CLINK! The wanderer have used his slingshot to kill the monster.
      */
+=======
+>>>>>>> 62a616670e05a4fbeef43d4c97b3dfc7e2fd9925
     public killMonster() {
         this.monster = false;
     }
