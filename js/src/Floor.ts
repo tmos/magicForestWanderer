@@ -14,6 +14,11 @@ export default class Floor {
     private trapClue: boolean = false;
     private monsterClue: boolean = false;
 
+    public isVisited: boolean = false;
+    public isAccessible: boolean = false;
+    private probabilityMonster = 0;
+    private probabilityTrap = 0;
+
     /**
      * Create a new floor.
      * @param {string} element The element on the floor, must be selected into constants
@@ -85,6 +90,49 @@ export default class Floor {
             this.monsterClue = true;
         }
     }
+
+    /**
+     * What is the probability this floor is a monster?
+     */
+    public getProbabilityMonster() {
+        return this.probabilityMonster;
+    }
+
+    /**
+     * Set the probability this floor is a monster.
+     */
+    public setProbabilityMonster(probability = 0) {
+        this.probabilityMonster = probability;
+    }
+
+    /**
+     * The probability this floor is a monster evolved.
+     */
+    public addProbabilityMonster(probability = 0) {
+        this.probabilityMonster += probability;
+    }
+
+    /**
+     * What is the probability this floor is a trap?
+     */
+    public getProbabilityTrap() {
+        return this.probabilityTrap;
+    }
+
+    /**
+     * Set the probability this floor is a trap.
+     */
+    public setProbabilityTrap(probability = 0) {
+        this.probabilityTrap = probability;
+    }
+
+    /**
+     * The probability this floor is a trap evolved.
+     */
+    public addProbabilityTrap(probability = 0) {
+        this.probabilityTrap += probability;
+    }
+
 
     /**
      * CLINK! The wanderer have used his slingshot to kill the monster.

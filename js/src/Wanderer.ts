@@ -6,9 +6,9 @@ import Forest from "./Forest";
  */
 export default class Wanderer {
     private forest: Forest;
-    private mapWidth: number;
-    private mapHeight: number;
+
     private map: Floor[][]; // The map the wanderer draws during his adventure
+
     private y: number;
     private x: number;
     private score: number;
@@ -35,12 +35,78 @@ export default class Wanderer {
         return this;
     }
 
+    public getMapHeight() {
+        return this.map.length;
+    }
+
+    public getMapWidth() {
+        return this.map[0].length;
+    }
+
     /**
      * Look what is under your feets, wanderer. And take care...
      */
     public perceive() {
-        this.map[this.y][this.x] = this.forest.getFloorContent(this.y, this.x);
+        let monsterClue = false;
+        let trapClue = false;
+        let numberAdjacentVisited = this.numberAdjacentVisited(this.y, this.x);
+        let probability = 0;
+        if (numberAdjacentVisited < 4) {
+            probability = 1 / ( 4 - numberAdjacentVisited);
+        }
 
+        this.map[this.y][this.x] = this.forest.getFloorContent(this.y, this.x);
+        this.map[this.y + 1][this.x] = this.forest.getFloorContent(this.y + 1, this.x);
+        this.map[this.y - 1][this.x] = this.forest.getFloorContent(this.y - 1, this.x);
+        this.map[this.y][this.x + 1] = this.forest.getFloorContent(this.y, this.x + 1);
+        this.map[this.y][this.x - 1] = this.forest.getFloorContent(this.y, this.x - 1);
+
+        this.map[this.y][this.x].isVisited = true;
+        
+        if (this.map[this.y][this.x].isMonsterClue()) {
+            monsterClue = true;
+        }
+        if (this.map[this.y][this.x].isTrapClue()) {
+            trapClue = true;
+        }
+
+        // Find adjacent floors
+        if (!this.map[this.y + 1][this.x].isTree() && !this.map[this.y + 1][this.x].isVisited) {
+            this.map[this.y + 1][this.x].isAccessible = true;
+            if (monsterClue) {
+                this.map[this.y + 1][this.x].addProbabilityMonster(probability);
+            }
+            if (trapClue) {
+               this.map[this.y + 1][this.x].addProbabilityTrap(probability); 
+            }
+        }
+        if (!this.map[this.y - 1][this.x].isTree() && !this.map[this.y - 1][this.x].isVisited) {
+            this.map[this.y - 1][this.x].isAccessible = true;
+            if (monsterClue) {
+                this.map[this.y - 1][this.x].addProbabilityMonster(probability);
+            }
+            if (trapClue) {
+               this.map[this.y - 1][this.x].addProbabilityTrap(probability); 
+            }
+        }
+        if (!this.map[this.y][this.x + 1].isTree() && !this.map[this.y][this.x + 1].isVisited) {
+            this.map[this.y][this.x + 1].isAccessible = true;
+            if (monsterClue) {
+                this.map[this.y][this.x + 1].addProbabilityMonster(probability);
+            }
+            if (trapClue) {
+               this.map[this.y][this.x + 1].addProbabilityTrap(probability); 
+            }
+        }
+        if (!this.map[this.y][this.x - 1].isTree() && !this.map[this.y][this.x - 1].isVisited) {
+            this.map[this.y][this.x - 1].isAccessible = true;
+            if (monsterClue) {
+                this.map[this.y][this.x - 1].addProbabilityMonster(probability);
+            }
+            if (trapClue) {
+               this.map[this.y][this.x - 1].addProbabilityTrap(probability); 
+            }
+        }
         return this;
     }
 
@@ -49,35 +115,43 @@ export default class Wanderer {
      */
     public think() {
         let thisFloor = this.map[this.y][this.x];
-        if (thisFloor.isMonsterClue() || thisFloor.isTrapClue()) {
-            // @todo
+        
+        // Here goes all the logical stuff
+        for (let j = 0 ; j < this.getMapHeight() ; j++) {
+            for (let i = 0 ; i < this.getMapWidth() ; i++) {
+                //
+            }
         }
-        // @todo
-
+        
         return this;
     }
 
     public move(y, x) {
-        if (y >= 0 && y < this.mapHeight) {
-            this.y = y;
-        }
-
-        if (x >= 0 && x < this.mapWidth) {
-            this.x = x;
-        }
-
-        // Verify Floor
-        let thisFloor = this.map[this.y][this.x];
-        if (thisFloor.isGoal()) {
-            // @todo Do move
-            // Oo-De-Lally!!
-            // @todo New forest
-        } else if (thisFloor.isMonster() || thisFloor.isTrap()) {
-            // Too much, too soon, too far to go, too late to play, the game is over
-            // @todo Wanderer die
-        }
+        // @todo mettre des UP, DOWN, SHOOT, etc...
 
         return this;
+    }
+
+    /**
+     * How many adjacent floors are already visited?
+     * @param {number} y The y position of the floor
+     * @param {number} x The x position of the floor
+     */
+    public numberAdjacentVisited(y, x) {
+        let number = 0;
+        if (!this.map[this.y + 1][this.x].isTree() && this.map[this.y + 1][this.x].isVisited) {
+            number += 1;
+        }
+        if (!this.map[this.y - 1][this.x].isTree() && this.map[this.y - 1][this.x].isVisited) {
+            number += 1;
+        }
+        if (!this.map[this.y][this.x + 1].isTree() && this.map[this.y][this.x + 1].isVisited) {
+            number += 1;
+        }
+        if (!this.map[this.y][this.x - 1].isTree() && this.map[this.y][this.x - 1].isVisited) {
+            number += 1;
+        }
+        return number;
     }
 
     /**
@@ -86,6 +160,8 @@ export default class Wanderer {
      * @param {number} x The x position of the target
      */
     public useSlingshot(y, x) {
+        this.score -= 10;
+        // @todo Test that this floor is next the wanderer's
         if (this.forest.getFloorContent(y, x).isMonster()) {
             this.forest.getFloorContent(y, x).killMonster();
             // @todo Call animation
