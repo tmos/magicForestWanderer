@@ -16,11 +16,11 @@ export default class Logical {
     }
 
     public probablyMonster(x: Floor): boolean {
-        return x.getProbabilityMonster() != 0;
+        return x.getProbabilityMonster() !== 0;
     }
 
     public probablyTrap(x: Floor): boolean {
-        return x.getProbabilityTrap() != 0;
+        return x.getProbabilityTrap() !== 0;
     }
 
     /**
@@ -29,7 +29,7 @@ export default class Logical {
     public probablyEmpty(x: Floor): boolean {
         return !this.probablyMonster(x) && !this.probablyTrap(x);
     }
-    
+
     /**
      * For each x 
      *      ((probablyEmpty(x) 
@@ -46,7 +46,7 @@ export default class Logical {
         function existsEmpty(thisClass: Logical): boolean {
             let i = 0;
             let exists = false;
-            while (i<thisClass.borders.length && !exists) {
+            while (i < thisClass.borders.length && !exists) {
                 exists = thisClass.probablyEmpty(thisClass.borders[i]);
                 i++;
             }
@@ -57,8 +57,10 @@ export default class Logical {
         function existsEmptyOrMonsterNotTrap(thisClass: Logical): boolean {
             let i = 0;
             let exists = false;
-            while (i<thisClass.borders.length && !exists) {
-                exists = thisClass.probablyEmpty(thisClass.borders[i]) || (thisClass.probablyMonster(thisClass.borders[i]) && !thisClass.probablyTrap(thisClass.borders[i]));
+            while (i < thisClass.borders.length && !exists) {
+                exists = thisClass.probablyEmpty(thisClass.borders[i]) 
+                || (thisClass.probablyMonster(thisClass.borders[i]) 
+                && !thisClass.probablyTrap(thisClass.borders[i]));
                 i++;
             }
             return exists;
@@ -80,8 +82,9 @@ export default class Logical {
         function existsMonsterMoreProbable(thisClass: Logical): boolean {
             let i = 0;
             let exists = false;
-            while (i<thisClass.borders.length && !exists) {
-                exists = thisClass.probablyMonster(thisClass.borders[i]) && thisClass.greaterProbabilityMonster(thisClass.borders[i], x);
+            while (i < thisClass.borders.length && !exists) {
+                exists = thisClass.probablyMonster(thisClass.borders[i]) 
+                && thisClass.greaterProbabilityMonster(thisClass.borders[i], x);
                 i++;
             }
             return exists;
@@ -112,8 +115,9 @@ export default class Logical {
         function existsTrapLessProbable(thisClass: Logical): boolean {
             let i = 0;
             let exists = false;
-            while (i<thisClass.borders.length && !exists) {
-                exists = thisClass.probablyTrap(thisClass.borders[i]) && thisClass.smallerProbabilityTrap(thisClass.borders[i], x);
+            while (i < thisClass.borders.length && !exists) {
+                exists = thisClass.probablyTrap(thisClass.borders[i]) 
+                && thisClass.smallerProbabilityTrap(thisClass.borders[i], x);
                 i++;
             }
             return exists;
@@ -124,7 +128,6 @@ export default class Logical {
         } else {
             return true;
         }
-
     }
 
     public greaterProbabilityMonster(y: Floor, x: Floor): boolean {

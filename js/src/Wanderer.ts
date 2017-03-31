@@ -1,5 +1,6 @@
 import Floor from "./Floor";
 import Forest from "./Forest";
+import Logical from "./Logical";
 
 /**
  * The wanderer, the hero of this quest. Good luck son...
@@ -98,7 +99,6 @@ export default class Wanderer {
             this.forestMap[this.y][this.x - 1] = this.forest.getFloorContent(this.y, this.x - 1);
         }
 
-
         if (this.forestMap[this.y][this.x].isMonsterClue()) {
             monsterClue = true;
         }
@@ -150,15 +150,53 @@ export default class Wanderer {
     public think() {
         let thisFloor = this.forestMap[this.y][this.x];
 
-        // Here goes all the logical stuff
+        // Find tiles to visit
+        let borderMap = [];
+        for (let j = 0 ; j < this.getMapHeight() ; j++) {
+            for (let i = 0 ; i < this.getMapWidth() ; i++) {
+                if (this.forestMap[j][i].isAccessible() && !this.forestMap[j][i].isVisited()) {
+                    borderMap.push(this.forestMap[j][i]);
+                }
+            }
+        }
+
+        // Complex logic after this line
+        let wandererLogic = new Logical(borderMap);
+        let position = -1;
+        let destinationFound = false;
+        while (((position + 1) < borderMap.length) && !destinationFound) {
+            position += 1;
+            if (wandererLogic.canGoTo(borderMap[position])) {
+                // Tests the logical rules
+                destinationFound = (wandererLogic.ruleMonster(borderMap[position]) 
+                && wandererLogic.ruleTrap(borderMap[position]));
+            }
+        }
+
+        let haveToShoot = false;
+        let path = [];
+        if (destinationFound) {
+            if (wandererLogic.shootBefore(borderMap[position])) {
+                haveToShoot = true;
+            }
+            path = this.findPath(thisFloor, borderMap[position], haveToShoot);
+        } else {
+            // @todo It is impossible
+        }
 
         return this;
+    }
+
+    public findPath(start: Floor, destination: Floor, haveToShoot: boolean) {
+        // @todo
+        return ["up", "left", "shoot-up"];
     }
 
     public move(direction: string) {
         let currentPos = this.getPosition();
         let newVal;
 
+        // @todo cases "shoot-up", "shoot-down", "shoot-left", "shoot-right"
         switch (direction) {
             case "left":
                 newVal = currentPos.x - 1;
@@ -180,7 +218,7 @@ export default class Wanderer {
                 break;
         }
 
-        this.setScore(-10);
+        this.setScore(-1);
 
         return this;
     }
