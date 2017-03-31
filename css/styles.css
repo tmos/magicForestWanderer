@@ -1180,33 +1180,55 @@ body {
     height: 60px; }
     #gameDiv .floorCase.warFog {
       background-color: black !important; }
+      #gameDiv .floorCase.warFog:before {
+        display: none; }
     #gameDiv .floorCase.monsterClue {
       background-color: mediumpurple; }
+      #gameDiv .floorCase.monsterClue.trapClue:before {
+        content: '';
+        width: 0px;
+        height: 0px;
+        border-top: 30px solid orange;
+        border-left: 30px solid orange;
+        border-bottom: 30px solid transparent;
+        border-right: 30px solid transparent;
+        position: absolute; }
     #gameDiv .floorCase.trapClue {
       background-color: orange; }
+      #gameDiv .floorCase.trapClue.monsterClue:before {
+        content: '';
+        width: 0px;
+        height: 0px;
+        border-top: 30px solid mediumpurple;
+        border-left: 30px solid mediumpurple;
+        border-bottom: 30px solid transparent;
+        border-right: 30px solid transparent;
+        position: absolute; }
     #gameDiv .floorCase.trap {
       background-color: red; }
     #gameDiv .floorCase.monster {
       background-color: purple; }
     #gameDiv .floorCase.goal {
       background-color: darkturquoise; }
-    #gameDiv .floorCase.wanderer {
-      background-color: greenyellow !important;
-      border: 10px solid #333; }
-      #gameDiv .floorCase.wanderer.trapClue {
-        border-color: orange; }
-      #gameDiv .floorCase.wanderer.trap {
-        border-color: red; }
-      #gameDiv .floorCase.wanderer.goal {
-        border-color: darkturquoise; }
-      #gameDiv .floorCase.wanderer.monster {
-        border-color: purple; }
-      #gameDiv .floorCase.wanderer.monsterClue {
-        border-color: mediumpurple; }
+    #gameDiv .floorCase.wanderer:after {
+      content: '';
+      background: url("../../assets/hero.png");
+      height: 60px;
+      width: 60px;
+      position: absolute; }
+    #gameDiv .floorCase.trap {
+      background-color: red; }
+    #gameDiv .floorCase.goal {
+      background-color: darkturquoise; }
+    #gameDiv .floorCase.monster {
+      background-color: purple; }
 
 #logDiv {
   text-align: center;
   font-size: 3rem;
   color: white; }
+
+.score {
+  font-family: gothic; }
 
 /*# sourceMappingURL=sourcemaps/styles.css.map */
