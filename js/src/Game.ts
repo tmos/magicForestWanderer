@@ -35,6 +35,9 @@ export default class Game {
             const newSize = this.getForest().getForest().length + 1;
             this.init(newSize, newSize);
         }
+
+        this.wanderer.updateMap();
+
         this.render();
     }
 

@@ -45,7 +45,7 @@ export default class Wanderer {
     }
 
     public isKnown(y: number, x: number) {
-        return this.forestMap[y][x] !== null;
+        return this.forestMap[y][x].isVisited();
     }
 
     public setForest(forest: Forest) {
@@ -66,13 +66,10 @@ export default class Wanderer {
     }
 
     public watchTheFloor(): Floor {
-        return this.forest.getFloorContent(this.y, this.x);
+        return this.forestMap[this.y][this.x];
     }
 
     public updateMap() {
-        const content = this.forest.getFloorContent(this.y, this.x);
-        this.forestMap[this.y][this.x] = content;
-
         let monsterClue = false;
         let trapClue = false;
         let numberAdjacentVisited = this.numberAdjacentVisited(this.y, this.x);
@@ -82,7 +79,9 @@ export default class Wanderer {
         }
 
         this.forestMap[this.y][this.x] = this.forest.getFloorContent(this.y, this.x);
+        this.forestMap[this.y][this.x].setVisited(true);
 
+        // No cheat here, just used for storing the probabilities
         if (this.y + 1 < this.forestMap.length) {
             this.forestMap[this.y + 1][this.x] = this.forest.getFloorContent(this.y + 1, this.x);
         }
@@ -96,7 +95,6 @@ export default class Wanderer {
             this.forestMap[this.y][this.x - 1] = this.forest.getFloorContent(this.y, this.x - 1);
         }
 
-        this.forestMap[this.y][this.x].setVisited(true);
 
         if (this.forestMap[this.y][this.x].isMonsterClue()) {
             monsterClue = true;
@@ -143,7 +141,7 @@ export default class Wanderer {
             }
         }
 
-        return content;
+        return this;
     }
 
     public think() {
