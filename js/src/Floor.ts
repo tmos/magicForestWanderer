@@ -7,6 +7,9 @@ import {empty, goal, monster, trap, tree} from "./constants";
  * Is it an horrible monster on this floor? Or a lethal trap? Or a clue for the next floor? You'll see, wanderer...
  */
 export default class Floor {
+    private x: number;
+    private y: number;
+
     private visited: boolean = false;
     private accessible: boolean = false;
     private trap: boolean = false;
@@ -17,7 +20,10 @@ export default class Floor {
     private probabilityMonster = 0;
     private probabilityTrap = 0;
 
-    constructor(element = empty) {
+    constructor(y: number, x: number, element = empty) {
+        this.x = x;
+        this.y = y;
+
         if (element === trap) {
             this.trap = true;
         } else if (element === goal) {
@@ -27,6 +33,14 @@ export default class Floor {
         } else {
             // The floor is empty otherwise
         }
+    }
+
+    public getX() {
+        return this.x;
+    }
+
+    public getY() {
+        return this.y;
     }
 
     public isTrap() {

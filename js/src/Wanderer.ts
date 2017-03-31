@@ -1,4 +1,3 @@
-import "jsprolog";
 import Floor from "./Floor";
 import Forest from "./Forest";
 
