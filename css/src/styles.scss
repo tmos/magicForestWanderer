@@ -6,14 +6,17 @@
 @import "../../node_modules/sweetalert/dist/sweetalert";
 
 /** Global styles */
+
 body {
     background-image: url("../assets/dark_wood.png")
 }
 
+
 /** Header */
+
 .header {
     background-image: url("../assets/grass.png");
-    box-shadow: inset 0 0 20px rgba(0,0,0,.25);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, .25);
     &__title {
         margin: 0;
         text-align: center;
@@ -25,40 +28,68 @@ body {
     }
 }
 
+
 /** Game Board */
 
 #gameWrapper {
     position: relative
 }
+
 #gameDiv {
     display: block;
     margin: 3rem auto;
-
     @for $i from 1 through 42 {
-        &.width#{$i} { width: 60px * $i; height: 60px * $i; }
+        &.width#{$i} {
+            width: 60px * $i;
+            height: 60px * $i;
+        }
     }
-
-
     .row {
         width: 100%;
     }
-
     .floorCase {
-        float:left;
+        float: left;
         display: block;
         background-color: #333;
         width: $largeurCase+px;
         height: $largeurCase+px;
-
         &.warFog {
             background-color: black!important;
+            &:before {
+                display: none;
+            }
         }
-
         &.monsterClue {
             background-color: mediumpurple;
+
+            &.trapClue {
+                &:before {
+                    content: '';
+                    width: 0px;
+                    height: 0px;
+                    border-top: 30px solid orange;
+                        border-left: 30px solid orange;
+                        border-bottom: 30px solid transparent;
+                        border-right: 30px solid transparent;
+                    position: absolute;
+                }
+            }
         }
         &.trapClue {
             background-color: orange;
+
+            &.monsterClue {
+                    &:before {
+                        content: '';
+                        width: 0px;
+                        height: 0px;
+                        border-top: 30px solid mediumpurple;
+                        border-left: 30px solid mediumpurple;
+                        border-bottom: 30px solid transparent;
+                        border-right: 30px solid transparent;
+                        position: absolute;
+                    }
+                }
         }
         &.trap {
             background-color: red;
@@ -68,26 +99,25 @@ body {
         }
         &.goal {
             background-color: darkturquoise;
+
         }
         &.wanderer {
-            background-color: greenyellow!important;
-            border: 10px solid #333;
-
-            &.trapClue {
-                border-color: orange;
+            &:after {
+                content:'';
+                background: url('../../assets/hero.png');
+                height: 60px;
+                width: 60px;
+                position: absolute;
             }
-            &.trap {
-                border-color: red;
-            }
-            &.goal {
-                border-color: darkturquoise;
-            }
-            &.monster {
-                border-color: purple;
-            }
-            &.monsterClue {
-                border-color: mediumpurple;
-            }
+        }
+        &.trap {
+            background-color: red;
+        }
+        &.goal {
+            background-color: darkturquoise;
+        }
+        &.monster {
+            background-color: purple;
         }
     }
 }
@@ -95,5 +125,9 @@ body {
 #logDiv {
     text-align: center;
     font-size: 3rem;
-    color:white;
+    color: white;
+}
+
+.score {
+    font-family: gothic;
 }
