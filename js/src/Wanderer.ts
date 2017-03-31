@@ -28,7 +28,7 @@ export default class Wanderer {
         for (let y = 0; y < height; y++) {
             this.forestMap[y] = [];
             for (let x = 0; x < width; x++) {
-                this.forestMap[y][x] = null;
+                this.forestMap[y][x] = new Floor();
             }
         }
 
@@ -64,7 +64,11 @@ export default class Wanderer {
         return `<div class="floorCase wanderer"></div>`;
     }
 
-    public perceive() {
+    public watchTheFloor(): Floor {
+        return this.forest.getFloorContent(this.y, this.x);
+    }
+
+    public updateMap() {
         const content = this.forest.getFloorContent(this.y, this.x);
         this.forestMap[this.y][this.x] = content;
 
@@ -77,13 +81,22 @@ export default class Wanderer {
         }
 
         this.forestMap[this.y][this.x] = this.forest.getFloorContent(this.y, this.x);
-        this.forestMap[this.y + 1][this.x] = this.forest.getFloorContent(this.y + 1, this.x);
-        this.forestMap[this.y - 1][this.x] = this.forest.getFloorContent(this.y - 1, this.x);
-        this.forestMap[this.y][this.x + 1] = this.forest.getFloorContent(this.y, this.x + 1);
-        this.forestMap[this.y][this.x - 1] = this.forest.getFloorContent(this.y, this.x - 1);
 
-        this.forestMap[this.y][this.x].isVisited = true;
-        
+        if (this.y + 1 < this.forestMap.length) {
+            this.forestMap[this.y + 1][this.x] = this.forest.getFloorContent(this.y + 1, this.x);
+        }
+        if (this.y - 1 >= 0) {
+            this.forestMap[this.y - 1][this.x] = this.forest.getFloorContent(this.y - 1, this.x);
+        }
+        if (this.x + 1 < this.forestMap[0].length) {
+            this.forestMap[this.y][this.x + 1] = this.forest.getFloorContent(this.y, this.x + 1);
+        }
+        if (this.x - 1 >= 0) {
+            this.forestMap[this.y][this.x - 1] = this.forest.getFloorContent(this.y, this.x - 1);
+        }
+
+        this.forestMap[this.y][this.x].setVisited(true);
+
         if (this.forestMap[this.y][this.x].isMonsterClue()) {
             monsterClue = true;
         }
@@ -92,40 +105,40 @@ export default class Wanderer {
         }
 
         // Find adjacent floors
-        if (!this.forestMap[this.y + 1][this.x].isTree() && !this.forestMap[this.y + 1][this.x].isVisited) {
-            this.forestMap[this.y + 1][this.x].isAccessible = true;
+        if (this.y + 1 < this.forestMap.length && !this.forestMap[this.y + 1][this.x].isVisited()) {
+            this.forestMap[this.y + 1][this.x].setAccessible(true);
             if (monsterClue) {
                 this.forestMap[this.y + 1][this.x].addProbabilityMonster(probability);
             }
             if (trapClue) {
-               this.forestMap[this.y + 1][this.x].addProbabilityTrap(probability); 
+               this.forestMap[this.y + 1][this.x].addProbabilityTrap(probability);
             }
         }
-        if (!this.forestMap[this.y - 1][this.x].isTree() && !this.forestMap[this.y - 1][this.x].isVisited) {
-            this.forestMap[this.y - 1][this.x].isAccessible = true;
+        if (this.y - 1 >= 0 && !this.forestMap[this.y - 1][this.x].isVisited()) {
+            this.forestMap[this.y - 1][this.x].setAccessible(true);
             if (monsterClue) {
                 this.forestMap[this.y - 1][this.x].addProbabilityMonster(probability);
             }
             if (trapClue) {
-               this.forestMap[this.y - 1][this.x].addProbabilityTrap(probability); 
+               this.forestMap[this.y - 1][this.x].addProbabilityTrap(probability);
             }
         }
-        if (!this.forestMap[this.y][this.x + 1].isTree() && !this.forestMap[this.y][this.x + 1].isVisited) {
-            this.forestMap[this.y][this.x + 1].isAccessible = true;
+        if (this.x + 1 < this.forestMap[0].length && !this.forestMap[this.y][this.x + 1].isVisited()) {
+            this.forestMap[this.y][this.x + 1].setAccessible(true);
             if (monsterClue) {
                 this.forestMap[this.y][this.x + 1].addProbabilityMonster(probability);
             }
             if (trapClue) {
-               this.forestMap[this.y][this.x + 1].addProbabilityTrap(probability); 
+               this.forestMap[this.y][this.x + 1].addProbabilityTrap(probability);
             }
         }
-        if (!this.forestMap[this.y][this.x - 1].isTree() && !this.forestMap[this.y][this.x - 1].isVisited) {
-            this.forestMap[this.y][this.x - 1].isAccessible = true;
+        if (this.x - 1 >= 0 && !this.forestMap[this.y][this.x - 1].isVisited()) {
+            this.forestMap[this.y][this.x - 1].setAccessible(true);
             if (monsterClue) {
                 this.forestMap[this.y][this.x - 1].addProbabilityMonster(probability);
             }
             if (trapClue) {
-               this.forestMap[this.y][this.x - 1].addProbabilityTrap(probability); 
+               this.forestMap[this.y][this.x - 1].addProbabilityTrap(probability);
             }
         }
 
@@ -134,8 +147,9 @@ export default class Wanderer {
 
     public think() {
         let thisFloor = this.forestMap[this.y][this.x];
-        
+
         // Here goes all the logical stuff
+
         return this;
     }
 
@@ -170,20 +184,21 @@ export default class Wanderer {
     }
 
     public numberAdjacentVisited(y: number, x: number) {
-        let number = 0;
-        if (!this.forestMap[this.y + 1][this.x].isTree() && this.forestMap[this.y + 1][this.x].isVisited) {
-            number += 1;
+        let num = 0;
+
+        if ( y + 1 < this.forestMap.length && this.forestMap[y + 1][x].isVisited()) {
+            num += 1;
         }
-        if (!this.forestMap[this.y - 1][this.x].isTree() && this.forestMap[this.y - 1][this.x].isVisited) {
-            number += 1;
+        if ( y - 1 >= 0  && this.forestMap[y - 1][x].isVisited()) {
+            num += 1;
         }
-        if (!this.forestMap[this.y][this.x + 1].isTree() && this.forestMap[this.y][this.x + 1].isVisited) {
-            number += 1;
+        if ( x + 1 < this.forestMap[0].length  && this.forestMap[y][x + 1].isVisited()) {
+            num += 1;
         }
-        if (!this.forestMap[this.y][this.x - 1].isTree() && this.forestMap[this.y][this.x - 1].isVisited) {
-            number += 1;
+        if ( x - 1 >= 0  && this.forestMap[y][x - 1].isVisited()) {
+            num += 1;
         }
-        return number;
+        return num;
     }
 
     public useSlingshot(y: number, x: number) {
@@ -204,7 +219,7 @@ export default class Wanderer {
     }
 
     public isDead(): boolean {
-        if (this.perceive().isTrap()) {
+        if (this.watchTheFloor().isTrap() || this.watchTheFloor().isMonster()) {
             return true;
         } else {
             return false;

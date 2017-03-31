@@ -10,15 +10,13 @@ export default class Floor {
     private x: number;
     private y: number;
 
+    private visited: boolean = false;
+    private accessible: boolean = false;
     private trap: boolean = false;
     private goal: boolean = false;
     private monster: boolean = false;
-    private tree: boolean = false;
     private trapClue: boolean = false;
     private monsterClue: boolean = false;
-
-    public isVisited: boolean = false;
-    public isAccessible: boolean = false;
     private probabilityMonster = 0;
     private probabilityTrap = 0;
 
@@ -32,8 +30,6 @@ export default class Floor {
             this.goal = true;
         } else if (element === monster) {
             this.monster = true;
-        } else if (element === tree) {
-            this.tree = true;
         } else {
             // The floor is empty otherwise
         }
@@ -59,10 +55,6 @@ export default class Floor {
         return this.monster;
     }
 
-    public isTree() {
-        return this.tree;
-    }
-
     public isMonsterClue() {
         return this.monsterClue;
     }
@@ -75,7 +67,6 @@ export default class Floor {
         if (!this.trap &&
             !this.goal &&
             !this.monster &&
-            !this.tree &&
             !this.trapClue &&
             !this.monsterClue) {
                 return true;
@@ -88,6 +79,19 @@ export default class Floor {
         } else if (clueType === monster) {
             this.monsterClue = true;
         }
+    }
+
+    public isVisited() {
+        return this.visited;
+    }
+    public setVisited(b = true) {
+        this.visited = b;
+    }
+    public isAccessible() {
+        return this.accessible;
+    }
+    public setAccessible(b = true) {
+        this.accessible = b;
     }
 
     /**
@@ -153,9 +157,6 @@ export default class Floor {
         }
         if (this.isMonster()) {
             classes.push("monster");
-        }
-        if (this.isTree()) {
-            classes.push("tree");
         }
         if (this.isTrapClue()) {
             classes.push("trapClue");
