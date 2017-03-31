@@ -1,6 +1,5 @@
 import Floor from "./Floor";
 import Forest from "./Forest";
-import "jsprolog";
 
 /**
  * The wanderer, the hero of this quest. Good luck son...
@@ -137,7 +136,6 @@ export default class Wanderer {
         let thisFloor = this.forestMap[this.y][this.x];
         
         // Here goes all the logical stuff
-        
         return this;
     }
 
