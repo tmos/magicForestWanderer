@@ -89,6 +89,14 @@ export default class Forest {
         return this.forest.length * this.forest[0].length;
     }
 
+    public getWidth(): number {
+        return this.forest.length;
+    }
+
+    public getHeight(): number {
+        return this.forest[0].length;
+    }
+
     private setClues(y: number, x: number, content: string) {
         if (y - 1 >= 0) {
             this.forest[y - 1][x].setClue(content);

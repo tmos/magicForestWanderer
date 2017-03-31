@@ -66,7 +66,11 @@ export default class Wanderer {
     }
 
     public watchTheFloor(): Floor {
-        return this.forestMap[this.y][this.x];
+        const content = this.forest.getFloorContent(this.y, this.x);
+        this.forestMap[this.y][this.x] = content;
+        this.forestMap[this.y][this.x].setVisited(true);
+
+        return content;
     }
 
     public updateMap() {
@@ -231,5 +235,13 @@ export default class Wanderer {
 
     public getScore(): number {
         return this.score;
+    }
+
+    public getMap(): Floor[][] {
+        return this.forestMap;
+    }
+
+    public setMap(m: Floor[][]) {
+        this.forestMap = m;
     }
 }

@@ -3,6 +3,7 @@
 @import "__fonts";
 @import "__base";
 @import "__vars";
+@import "../../node_modules/sweetalert/dist/sweetalert";
 
 /** Global styles */
 body {
@@ -52,9 +53,7 @@ body {
         &.warFog {
             background-color: black!important;
         }
-        &.monster {
-            background-color: purple;
-        }
+
         &.monsterClue {
             background-color: mediumpurple;
         }
@@ -64,11 +63,14 @@ body {
         &.trap {
             background-color: red;
         }
+        &.monster {
+            background-color: purple;
+        }
         &.goal {
             background-color: darkturquoise;
         }
         &.wanderer {
-            background-color: greenyellow;
+            background-color: greenyellow!important;
             border: 10px solid #333;
 
             &.trapClue {

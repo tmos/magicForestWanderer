@@ -1,4 +1,6 @@
 import * as $ from "jquery";
+import * as swal from "sweetalert";
+import Floor from "./Floor";
 import Forest from "./Forest";
 import Wanderer from "./Wanderer";
 
@@ -20,23 +22,33 @@ export default class Game {
         this.createForest(w, h);
         this.getForest().populate();
         this.setWanderer();
-        this.render();
+        this.update();
     }
 
     public update() {
+        this.wanderer.updateMap();
+
         if (this.wanderer.isDead()) {
-            alert("You die.");
+            swal({
+                title: "☠",
+                text: "You just died. Too bad.",
+                type: "error",
+            });
             this.wanderer.setScore(-(10 * this.getForest().getNumberOfCases()));
+            this.setWanderer(this.wanderer.getMap());
         }
         if (this.wanderer.isOut()) {
             // You just won this forest !
             this.wanderer.setScore(10 * this.getForest().getNumberOfCases());
             // Create the next level
             const newSize = this.getForest().getForest().length + 1;
+            swal({
+                title: "⭐️",
+                text: "You just won this forest !",
+                type: "success",
+            });
             this.init(newSize, newSize);
         }
-
-        this.wanderer.updateMap();
 
         this.render();
     }
@@ -54,12 +66,9 @@ export default class Game {
         return this.currentForest;
     }
 
-    private setWanderer(): Game {
+    private setWanderer(m: Floor[][] = undefined): Game {
         const forest = this.currentForest.getForest();
 
-        if (!forest) {
-            return undefined;
-        }
         let isOk = false;
         let y;
         let x;
@@ -76,6 +85,10 @@ export default class Game {
             oldScore = this.wanderer.getScore();
         }
         this.wanderer = new Wanderer(y, x, this.currentForest, oldScore);
+
+        if (m) {
+            this.wanderer.setMap(m);
+        }
 
         return this;
     }
