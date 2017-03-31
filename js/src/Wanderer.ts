@@ -28,7 +28,7 @@ export default class Wanderer {
         for (let y = 0; y < height; y++) {
             this.forestMap[y] = [];
             for (let x = 0; x < width; x++) {
-                this.forestMap[y][x] = new Floor();
+                this.forestMap[y][x] = new Floor(y, x);
             }
         }
 

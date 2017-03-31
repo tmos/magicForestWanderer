@@ -24,12 +24,12 @@ export default class Forest {
 
                 if (tmpRand === 0) {
                     // It's a monster!
-                    tmp[y][x] = new Floor(monster);
+                    tmp[y][x] = new Floor(y, x, monster);
                 } else if (tmpRand === 1) {
                     // It's a trap!
-                    tmp[y][x] = new Floor(trap);
+                    tmp[y][x] = new Floor(y, x, trap);
                 } else {
-                    tmp[y][x] = new Floor();
+                    tmp[y][x] = new Floor(y, x);
                 }
             }
         }
@@ -45,7 +45,7 @@ export default class Forest {
             outX = Math.floor(Math.random() * (this.forest[0].length - 0) + 0);
 
             if (this.forest[outY][outX].isEmpty) {
-                this.forest[outY][outX] = new Floor(goal);
+                this.forest[outY][outX] = new Floor(outY, outX, goal);
                 isAWayOut = true;
             }
         }
