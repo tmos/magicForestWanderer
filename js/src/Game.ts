@@ -25,7 +25,7 @@ export default class Game {
 
     public update() {
         if (this.wanderer.isDead()) {
-            alert('You die.');
+            alert("You die.");
             this.wanderer.setScore(-(10 * this.getForest().getNumberOfCases()));
         }
         if (this.wanderer.isOut()) {
@@ -73,7 +73,6 @@ export default class Game {
             oldScore = this.wanderer.getScore();
         }
         this.wanderer = new Wanderer(y, x, this.currentForest, oldScore);
-
 
         return this;
     }
