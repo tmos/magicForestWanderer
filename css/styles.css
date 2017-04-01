@@ -1200,8 +1200,10 @@ body {
     #gameDiv .floorCase.goal {
       background: url("../../assets/goal.png"); }
     #gameDiv .floorCase.warFog {
-      background-image: none !important;
-      background-color: black !important; }
+      opacity: 0.61 !important;
+      background-color: darkslateblue !important;
+      /*background-image: none!important;
+            background-color: black!important;*/ }
 
 #logDiv {
   text-align: center;
