@@ -1026,7 +1026,7 @@ body {
 
 /** Header */
 .header {
-  background-image: url("../assets/grass.png");
+  background-image: url("../assets/forest.png");
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.25); }
   .header__title {
     margin: 0;
@@ -1175,7 +1175,7 @@ body {
   #gameDiv .floorCase {
     float: left;
     display: block;
-    background-color: #333;
+    background-color: #76A31D;
     width: 60px;
     height: 60px; }
     #gameDiv .floorCase.warFog {

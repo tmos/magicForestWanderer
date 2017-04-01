@@ -1,6 +1,8 @@
 import Floor from "./Floor";
 import Forest from "./Forest";
 import Logical from "./Logical";
+// @todo correct the line below
+import PathFinding from "pathfinding";
 
 /**
  * The wanderer, the hero of this quest. Good luck son...
@@ -188,8 +190,84 @@ export default class Wanderer {
     }
 
     public findPath(start: Floor, destination: Floor, haveToShoot: boolean) {
-        // @todo
-        return ["up", "left", "shoot-up"];
+        // Matrix init
+        let matrix = new Array(this.forestMapHeight);
+        for (let j = 0; j < this.forestMapHeight; j++) {
+            matrix[j] = new Array(this.forestMapWidth);
+            for (let i = 0; i < this.forestMapWidth; i++) {
+                if (this.forestMap[j][i].isVisited() && !this.forestMap[j][i].isMonster() && !this.forestMap[j][i].isTrap()) {
+                    // Walkable
+                    matrix[j][i] = 0;
+                } else {
+                    // Blocked
+                    matrix[j][i] = 1;
+                }
+            }
+        }
+        // Destination must be walkable
+        matrix[destination.getY()][destination.getX()] = 0;
+
+        let grid = new PathFinding.Grid(matrix);
+        let finder = new PathFinding.AStarFinder();
+        // @todo verify x and y axis order : https://www.npmjs.com/package/pathfinding
+        let path = finder.findPath(start.getX(), start.getY(), destination.getX(), destination.getY(), grid);
+
+        let movesPath = this.findMoves(path, haveToShoot);
+        return movesPath;
+    }
+
+    public findMoves(path: any[], haveToShoot: boolean) {
+        let movesPath = [];
+        // @todo verify x and y axis order from this.findPath()
+        // using https://www.npmjs.com/package/pathfinding , path[i][0] is x and path[i][1] is y
+        for (let i = 1; i < path.length; i++) {
+            if (path[i][0] == path[i - 1][0]) {
+                // x is the same, so the wanderer goes up or down
+                if (path[i][1] < path[i - 1][1]) {
+                    // The wanderer goes left
+                    movesPath.push("left");
+                } else if (path[i][1] > path[i - 1][1]) {
+                    // The wanderer goes right
+                    movesPath.push("right");
+                } else {
+                    // @todo WTF!
+                }
+            } else if (path[i][1] == path[i - 1][1]) {
+                // y is the same, so the wanderer goes left or right
+                if (path[i][0] < path[i - 1][0]) {
+                    // The wanderer goes up
+                    movesPath.push("up");
+                } else if (path[i][0] > path[i - 1][0]) {
+                    // The wanderer goes down
+                    movesPath.push("down");
+                } else {
+                    // @todo WTF!
+                }
+            }
+        }
+
+        if (haveToShoot) {
+            let shotDirection = "";
+            switch (movesPath[movesPath.length - 1]) {
+                case "up":
+                    shotDirection = "shoot-up";
+                    break;
+                case "down":
+                    shotDirection = "shoot-down";
+                    break;
+                case "left":
+                    shotDirection = "shoot-left";
+                    break;
+                case "right":
+                    shotDirection = "shoot-right";
+                    break;
+                default:
+                    break;
+            }
+            movesPath.splice(movesPath.length - 1, 0, shotDirection);
+        }
+
+        return movesPath;
     }
 
     public move(direction: string) {

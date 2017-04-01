@@ -15,7 +15,7 @@ body {
 /** Header */
 
 .header {
-    background-image: url("../assets/grass.png");
+    background-image: url("../assets/forest.png");
     box-shadow: inset 0 0 20px rgba(0, 0, 0, .25);
     &__title {
         margin: 0;
@@ -50,7 +50,7 @@ body {
     .floorCase {
         float: left;
         display: block;
-        background-color: #333;
+        background-color: #76A31D;
         width: $largeurCase+px;
         height: $largeurCase+px;
         &.warFog {
