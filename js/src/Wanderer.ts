@@ -1,8 +1,7 @@
+import * as PathFinding from "pathfinding";
 import Floor from "./Floor";
 import Forest from "./Forest";
 import Logical from "./Logical";
-// @todo correct the line below
-import PathFinding from "pathfinding";
 
 /**
  * The wanderer, the hero of this quest. Good luck son...
@@ -15,6 +14,7 @@ export default class Wanderer {
     private y: number;
     private x: number;
     private score: number;
+    private actions: string[] = [];
 
     constructor(playerY: number, playerX: number, darkWoods: Forest, score: number = 0) {
         this.forest = darkWoods;
@@ -149,9 +149,29 @@ export default class Wanderer {
         return this;
     }
 
+    public act() {
+        if (this.actions.length > 0) {
+            const action = this.actions.shift();
+
+            if (action === "left" || action === "right" || action === "up" || action === "down") {
+                this.move(action);
+            } else if (action === "shoot-left" ||
+                action === "shoot-right" ||
+                action === "shoot-up" ||
+                action === "shoot-down") {
+                const shootDirection = action.substring(6);
+                this.useSlingshot(shootDirection);
+            }
+        } else {
+            console.log("acted for nothing");
+
+        }
+    }
+
     public think() {
         let thisFloor = this.forestMap[this.y][this.x];
 
+        this.updateMap();
         // Find tiles to visit
         let borderMap = [];
         for (let j = 0 ; j < this.getMapHeight() ; j++) {
@@ -170,47 +190,61 @@ export default class Wanderer {
             position += 1;
             if (wandererLogic.canGoTo(borderMap[position])) {
                 // Tests the logical rules
-                destinationFound = (wandererLogic.ruleMonster(borderMap[position]) 
+                destinationFound = (wandererLogic.ruleMonster(borderMap[position])
                 && wandererLogic.ruleTrap(borderMap[position]));
             }
         }
+        console.log("dest found : " + destinationFound);
+        console.log("final destination :");
+        console.log(borderMap[position]);
+
 
         let haveToShoot = false;
-        let path = [];
+
         if (destinationFound) {
             if (wandererLogic.shootBefore(borderMap[position])) {
                 haveToShoot = true;
             }
-            path = this.findPath(thisFloor, borderMap[position], haveToShoot);
+            this.actions = this.findPath(thisFloor, borderMap[position], haveToShoot);
         } else {
             // @todo It is impossible
         }
-
+        console.log(this.actions);
         return this;
     }
 
     public findPath(start: Floor, destination: Floor, haveToShoot: boolean) {
         // Matrix init
-        let matrix = new Array(this.forestMapHeight);
-        for (let j = 0; j < this.forestMapHeight; j++) {
-            matrix[j] = new Array(this.forestMapWidth);
-            for (let i = 0; i < this.forestMapWidth; i++) {
-                if (this.forestMap[j][i].isVisited() && !this.forestMap[j][i].isMonster() && !this.forestMap[j][i].isTrap()) {
+        let matrix: number[][] = [];
+        for (let y = 0; y < this.forestMapHeight; y++) {
+            matrix[y] = [];
+            for (let x = 0; x < this.forestMapWidth; x++) {
+                if (this.forestMap[y][x].isVisited()
+                    && !this.forestMap[y][x].isMonster()
+                    && !this.forestMap[y][x].isTrap()) {
                     // Walkable
-                    matrix[j][i] = 0;
+                    matrix[y][x] = 0;
                 } else {
                     // Blocked
-                    matrix[j][i] = 1;
+                    matrix[y][x] = 1;
                 }
             }
         }
+
         // Destination must be walkable
         matrix[destination.getY()][destination.getX()] = 0;
 
         let grid = new PathFinding.Grid(matrix);
         let finder = new PathFinding.AStarFinder();
         // @todo verify x and y axis order : https://www.npmjs.com/package/pathfinding
+        console.log("grid");
+
+        console.log(matrix);
+
         let path = finder.findPath(start.getX(), start.getY(), destination.getX(), destination.getY(), grid);
+        console.log("path");
+
+        console.log(path);
 
         let movesPath = this.findMoves(path, haveToShoot);
         return movesPath;
@@ -221,23 +255,23 @@ export default class Wanderer {
         // @todo verify x and y axis order from this.findPath()
         // using https://www.npmjs.com/package/pathfinding , path[i][0] is x and path[i][1] is y
         for (let i = 1; i < path.length; i++) {
-            if (path[i][0] == path[i - 1][0]) {
+            if (path[i][1] === path[i - 1][1]) {
                 // x is the same, so the wanderer goes up or down
-                if (path[i][1] < path[i - 1][1]) {
+                if (path[i][0] < path[i - 1][0]) {
                     // The wanderer goes left
                     movesPath.push("left");
-                } else if (path[i][1] > path[i - 1][1]) {
+                } else if (path[i][0] > path[i - 1][0]) {
                     // The wanderer goes right
                     movesPath.push("right");
                 } else {
                     // @todo WTF!
                 }
-            } else if (path[i][1] == path[i - 1][1]) {
+            } else if (path[i][0] === path[i - 1][0]) {
                 // y is the same, so the wanderer goes left or right
-                if (path[i][0] < path[i - 1][0]) {
+                if (path[i][1] < path[i - 1][1]) {
                     // The wanderer goes up
                     movesPath.push("up");
-                } else if (path[i][0] > path[i - 1][0]) {
+                } else if (path[i][1] > path[i - 1][1]) {
                     // The wanderer goes down
                     movesPath.push("down");
                 } else {
@@ -274,7 +308,6 @@ export default class Wanderer {
         let currentPos = this.getPosition();
         let newVal;
 
-        // @todo cases "shoot-up", "shoot-down", "shoot-left", "shoot-right"
         switch (direction) {
             case "left":
                 newVal = currentPos.x - 1;
@@ -319,11 +352,38 @@ export default class Wanderer {
         return num;
     }
 
-    public useSlingshot(y: number, x: number) {
-        if (this.forest.getFloorContent(y, x).isMonster()) {
-            this.forest.getFloorContent(y, x).killMonster();
-            // @todo Call animation
+    public useSlingshot(direction: String) {
+        const currentPos = this.getPosition();
+        let x;
+        let y;
+        let target;
+
+        switch (direction) {
+            case "left":
+                target = currentPos.x - 1;
+                if (target >= 0) { x = target; }
+                break;
+            case "right":
+                target = currentPos.x + 1;
+                if (target < this.forestMapWidth) { x = target; }
+                break;
+            case "up":
+                target = currentPos.y - 1;
+                if (target >= 0) { y = target; }
+                break;
+            case "down":
+                target = currentPos.y + 1;
+                if (target < this.forestMapHeight) { y = target; }
+                break;
+            default:
+                break;
         }
+
+        this.forest.getFloorContent(y, x).killMonster();
+
+        this.setScore(-10);
+
+        return this;
     }
 
     public isOut(): boolean {
@@ -358,5 +418,9 @@ export default class Wanderer {
 
     public setMap(m: Floor[][]) {
         this.forestMap = m;
+    }
+
+    public hasNoMoves() {
+        return this.actions.length === 0;
     }
 }

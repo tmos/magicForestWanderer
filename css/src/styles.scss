@@ -35,9 +35,19 @@ body {
     position: relative
 }
 
+.monsterClue.trapClue {
+    background: url('../../assets/bothClues.png');
+}
+
 #gameDiv {
     display: block;
     margin: 3rem auto;
+    background: url('../../assets/grass.png');
+    overflow: hidden;
+    border-radius: 2px;
+    box-shadow: 0 0 10px #000;
+
+
     @for $i from 1 through 42 {
         &.width#{$i} {
             width: 60px * $i;
@@ -50,55 +60,21 @@ body {
     .floorCase {
         float: left;
         display: block;
-        background-color: #76A31D;
         width: $largeurCase+px;
         height: $largeurCase+px;
-        &.warFog {
-            background-color: black!important;
-            &:before {
-                display: none;
-            }
-        }
-        &.monsterClue {
-            background-color: mediumpurple;
 
-            &.trapClue {
-                &:before {
-                    content: '';
-                    width: 0px;
-                    height: 0px;
-                    border-top: 30px solid orange;
-                        border-left: 30px solid orange;
-                        border-bottom: 30px solid transparent;
-                        border-right: 30px solid transparent;
-                    position: absolute;
-                }
-            }
+        &.monsterClue {
+            background: url('../../assets/monsterClue.png');
         }
         &.trapClue {
-            background-color: orange;
-
-            &.monsterClue {
-                    &:before {
-                        content: '';
-                        width: 0px;
-                        height: 0px;
-                        border-top: 30px solid mediumpurple;
-                        border-left: 30px solid mediumpurple;
-                        border-bottom: 30px solid transparent;
-                        border-right: 30px solid transparent;
-                        position: absolute;
-                    }
-                }
+            background: url('../../assets/trapClue.png');
         }
         &.trap {
-            background-color: red;
+            background: url('../../assets/trap.png');
+
         }
         &.monster {
-            background-color: purple;
-        }
-        &.goal {
-            background-color: darkturquoise;
+            background: url('../../assets/monster.png');
 
         }
         &.wanderer {
@@ -110,14 +86,12 @@ body {
                 position: absolute;
             }
         }
-        &.trap {
-            background-color: red;
-        }
         &.goal {
-            background-color: darkturquoise;
+            background: url('../../assets/goal.png');
         }
-        &.monster {
-            background-color: purple;
+        &.warFog {
+            background-image: none;
+            background-color: black!important;
         }
     }
 }

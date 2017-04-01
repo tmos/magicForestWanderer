@@ -1041,9 +1041,16 @@ body {
 #gameWrapper {
   position: relative; }
 
+.monsterClue.trapClue {
+  background: url("../../assets/bothClues.png"); }
+
 #gameDiv {
   display: block;
-  margin: 3rem auto; }
+  margin: 3rem auto;
+  background: url("../../assets/grass.png");
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 0 10px #000; }
   #gameDiv.width1 {
     width: 60px;
     height: 60px; }
@@ -1175,53 +1182,27 @@ body {
   #gameDiv .floorCase {
     float: left;
     display: block;
-    background-color: #76A31D;
     width: 60px;
     height: 60px; }
-    #gameDiv .floorCase.warFog {
-      background-color: black !important; }
-      #gameDiv .floorCase.warFog:before {
-        display: none; }
     #gameDiv .floorCase.monsterClue {
-      background-color: mediumpurple; }
-      #gameDiv .floorCase.monsterClue.trapClue:before {
-        content: '';
-        width: 0px;
-        height: 0px;
-        border-top: 30px solid orange;
-        border-left: 30px solid orange;
-        border-bottom: 30px solid transparent;
-        border-right: 30px solid transparent;
-        position: absolute; }
+      background: url("../../assets/monsterClue.png"); }
     #gameDiv .floorCase.trapClue {
-      background-color: orange; }
-      #gameDiv .floorCase.trapClue.monsterClue:before {
-        content: '';
-        width: 0px;
-        height: 0px;
-        border-top: 30px solid mediumpurple;
-        border-left: 30px solid mediumpurple;
-        border-bottom: 30px solid transparent;
-        border-right: 30px solid transparent;
-        position: absolute; }
+      background: url("../../assets/trapClue.png"); }
     #gameDiv .floorCase.trap {
-      background-color: red; }
+      background: url("../../assets/trap.png"); }
     #gameDiv .floorCase.monster {
-      background-color: purple; }
-    #gameDiv .floorCase.goal {
-      background-color: darkturquoise; }
+      background: url("../../assets/monster.png"); }
     #gameDiv .floorCase.wanderer:after {
       content: '';
       background: url("../../assets/hero.png");
       height: 60px;
       width: 60px;
       position: absolute; }
-    #gameDiv .floorCase.trap {
-      background-color: red; }
     #gameDiv .floorCase.goal {
-      background-color: darkturquoise; }
-    #gameDiv .floorCase.monster {
-      background-color: purple; }
+      background: url("../../assets/goal.png"); }
+    #gameDiv .floorCase.warFog {
+      background-image: none;
+      background-color: black !important; }
 
 #logDiv {
   text-align: center;

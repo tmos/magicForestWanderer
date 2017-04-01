@@ -22,16 +22,21 @@ export default class Game {
         this.createForest(w, h);
         this.getForest().populate();
         this.setWanderer();
-        this.update();
     }
 
-    public update() {
-        this.wanderer.updateMap();
+    public update(letsPlay: boolean = true) {
+
+        if (letsPlay === true) {
+            if (this.wanderer.hasNoMoves()) {
+                this.wanderer.think();
+            }
+            this.wanderer.act();
+        }
 
         if (this.wanderer.isDead()) {
             swal({
-                title: "☠",
                 text: "You just died. Too bad.",
+                title: "☠",
                 type: "error",
             });
             this.wanderer.setScore(-(10 * this.getForest().getNumberOfCases()));
@@ -43,13 +48,14 @@ export default class Game {
             // Create the next level
             const newSize = this.getForest().getForest().length + 1;
             swal({
-                title: "⭐️",
                 text: "You just won this forest !",
+                title: "⭐️",
                 type: "success",
             });
             this.init(newSize, newSize);
         }
 
+        this.wanderer.watchTheFloor();
         this.render();
     }
 
@@ -76,7 +82,7 @@ export default class Game {
             y = Math.floor(Math.random() * (forest.length - 0) + 0);
             x = Math.floor(Math.random() * (forest[0].length - 0) + 0);
 
-            if (forest[y][x].isEmpty) {
+            if (forest[y][x].isEmpty()) {
                 isOk = true;
             }
         }
