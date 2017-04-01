@@ -117,36 +117,52 @@ export default class Wanderer {
             this.forestMap[this.y + 1][this.x].setAccessible(true);
             if (monsterClue) {
                 this.forestMap[this.y + 1][this.x].addProbabilityMonster(probability);
+            } else {
+                this.forestMap[this.y + 1][this.x].setProbabilityMonster(0);
             }
             if (trapClue) {
-               this.forestMap[this.y + 1][this.x].addProbabilityTrap(probability);
+                this.forestMap[this.y + 1][this.x].addProbabilityTrap(probability);
+            } else {
+                this.forestMap[this.y + 1][this.x].setProbabilityTrap(0);
             }
         }
         if (this.y - 1 >= 0 && !this.forestMap[this.y - 1][this.x].isVisited()) {
             this.forestMap[this.y - 1][this.x].setAccessible(true);
             if (monsterClue) {
                 this.forestMap[this.y - 1][this.x].addProbabilityMonster(probability);
+            } else {
+                this.forestMap[this.y - 1][this.x].setProbabilityMonster(0);
             }
             if (trapClue) {
-               this.forestMap[this.y - 1][this.x].addProbabilityTrap(probability);
+                this.forestMap[this.y - 1][this.x].addProbabilityTrap(probability);
+            } else {
+                this.forestMap[this.y - 1][this.x].setProbabilityTrap(0);
             }
         }
         if (this.x + 1 < this.forestMap[0].length && !this.forestMap[this.y][this.x + 1].isVisited()) {
             this.forestMap[this.y][this.x + 1].setAccessible(true);
             if (monsterClue) {
                 this.forestMap[this.y][this.x + 1].addProbabilityMonster(probability);
+            } else {
+                this.forestMap[this.y][this.x + 1].setProbabilityMonster(0);
             }
             if (trapClue) {
-               this.forestMap[this.y][this.x + 1].addProbabilityTrap(probability);
+                this.forestMap[this.y][this.x + 1].addProbabilityTrap(probability);
+            } else {
+                this.forestMap[this.y][this.x + 1].setProbabilityTrap(0);
             }
         }
         if (this.x - 1 >= 0 && !this.forestMap[this.y][this.x - 1].isVisited()) {
             this.forestMap[this.y][this.x - 1].setAccessible(true);
             if (monsterClue) {
                 this.forestMap[this.y][this.x - 1].addProbabilityMonster(probability);
+            } else {
+                this.forestMap[this.y][this.x - 1].setProbabilityMonster(0);
             }
             if (trapClue) {
-               this.forestMap[this.y][this.x - 1].addProbabilityTrap(probability);
+                this.forestMap[this.y][this.x - 1].addProbabilityTrap(probability);
+            } else {
+                this.forestMap[this.y][this.x - 1].setProbabilityTrap(0);
             }
         }
 
@@ -167,8 +183,7 @@ export default class Wanderer {
                 this.useSlingshot(shootDirection);
             }
         } else {
-            console.log("acted for nothing");
-
+            // @todo
         }
     }
 
@@ -191,19 +206,11 @@ export default class Wanderer {
         let position = 0;
         let destinationFound = false;
         while (((position) < borderMap.length) && destinationFound === false) {
-            console.log("can go to :");
-            console.log(wandererLogic.canGoTo(borderMap[position]));
             if (wandererLogic.canGoTo(borderMap[position])) {
-                console.log("pos");
-                console.log(borderMap[position]);
 
                 // Tests the logical rules
-                console.log("rulemonster :");
-                console.log(wandererLogic.ruleMonster(borderMap[position]));
-                console.log("ruleTrap:");
-                console.log(wandererLogic.ruleTrap(borderMap[position]));
-
-                destinationFound = (wandererLogic.ruleMonster(borderMap[position])
+                destinationFound = (wandererLogic.ruleMonsterNotTrap(borderMap[position])
+                                    && wandererLogic.ruleMonsterTrap(borderMap[position])
                                     && wandererLogic.ruleTrap(borderMap[position]));
             }
 
@@ -211,9 +218,6 @@ export default class Wanderer {
                 position++;
             }
         }
-        console.log("dest found : " + destinationFound);
-        console.log("final destination :");
-        console.log(borderMap[position]);
 
 
         let haveToShoot = false;
@@ -254,14 +258,8 @@ export default class Wanderer {
         let grid = new PathFinding.Grid(matrix);
         let finder = new PathFinding.AStarFinder();
         // @todo verify x and y axis order : https://www.npmjs.com/package/pathfinding
-        console.log("grid");
-
-        console.log(matrix);
 
         let path = finder.findPath(start.getX(), start.getY(), destination.getX(), destination.getY(), grid);
-        console.log("path");
-
-        console.log(path);
 
         let movesPath = this.findMoves(path, haveToShoot);
         return movesPath;
@@ -269,8 +267,7 @@ export default class Wanderer {
 
     public findMoves(path: any[], haveToShoot: boolean) {
         let movesPath = [];
-        // @todo verify x and y axis order from this.findPath()
-        // using https://www.npmjs.com/package/pathfinding , path[i][0] is x and path[i][1] is y
+        // path[i][1] is x and path[i][0] is y
         for (let i = 1; i < path.length; i++) {
             if (path[i][1] === path[i - 1][1]) {
                 // x is the same, so the wanderer goes up or down

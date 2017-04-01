@@ -73,25 +73,53 @@ export default class Logical {
 
     /**
      * For each x
-     *      ((canGoTo(x) and probablyMonster(x))
-     *          => not exists y (probablyMonster(y) and greaterProbabilityMonster(y, x)))
+     *      ((canGoTo(x) and probablyMonster(x) and not probablyTrap(x))
+     *          => not exists y (probablyMonster(y) and not probablyTrap(y) and greaterProbabilityMonster(y, x)))
      */
-    public ruleMonster(x: Floor): boolean {
+    public ruleMonsterNotTrap(x: Floor): boolean {
 
-        // Exists y (probablyMonster(y) and greaterProbabilityMonster(y, x))
+        // Exists y (probablyMonster(y) and not probablyTrap(y) and greaterProbabilityMonster(y, x))
         function existsMonsterMoreProbable(thisClass: Logical, floor: Floor): boolean {
             let i = 0;
             let exists = false;
             while (i < thisClass.borders.length && !exists) {
                 exists = thisClass.probablyMonster(thisClass.borders[i])
+                && !thisClass.probablyTrap(thisClass.borders[i])
                 && thisClass.greaterProbabilityMonster(thisClass.borders[i], floor);
                 i++;
             }
             return exists;
         }
 
-        if (this.canGoTo(x) && this.probablyMonster(x)) {
+        if (this.canGoTo(x) && this.probablyMonster(x) && !this.probablyTrap(x)) {
             return !existsMonsterMoreProbable(this, x);
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * For each x
+     *      ((canGoTo(x) and probablyMonster(x) and probablyTrap(x))
+     *          => not exists y (probablyMonster(y) and probablyTrap(y) and greaterProbabilityMonster(y, x)))
+     */
+    public ruleMonsterTrap(x: Floor): boolean {
+
+        // Exists y (probablyMonster(y) and probablyTrap(y) and greaterProbabilityMonster(y, x))
+        function existsMonsterTrapMoreProbable(thisClass: Logical, floor: Floor): boolean {
+            let i = 0;
+            let exists = false;
+            while (i < thisClass.borders.length && !exists) {
+                exists = thisClass.probablyMonster(thisClass.borders[i])
+                && thisClass.probablyTrap(thisClass.borders[i])
+                && thisClass.greaterProbabilityMonster(thisClass.borders[i], floor);
+                i++;
+            }
+            return exists;
+        }
+
+        if (this.canGoTo(x) && this.probablyMonster(x) && this.probablyTrap(x)) {
+            return !existsMonsterTrapMoreProbable(this, x);
         } else {
             return true;
         }
