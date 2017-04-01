@@ -188,14 +188,27 @@ export default class Wanderer {
 
         // Complex logic after this line
         let wandererLogic = new Logical(borderMap);
-        let position = -1;
+        let position = 0;
         let destinationFound = false;
-        while (((position + 1) < borderMap.length) && !destinationFound) {
-            position += 1;
+        while (((position) < borderMap.length) && destinationFound === false) {
+            console.log("can go to :");
+            console.log(wandererLogic.canGoTo(borderMap[position]));
             if (wandererLogic.canGoTo(borderMap[position])) {
+                console.log("pos");
+                console.log(borderMap[position]);
+
                 // Tests the logical rules
+                console.log("rulemonster :");
+                console.log(wandererLogic.ruleMonster(borderMap[position]));
+                console.log("ruleTrap:");
+                console.log(wandererLogic.ruleTrap(borderMap[position]));
+
                 destinationFound = (wandererLogic.ruleMonster(borderMap[position])
-                && wandererLogic.ruleTrap(borderMap[position]));
+                                    && wandererLogic.ruleTrap(borderMap[position]));
+            }
+
+            if (destinationFound === false) {
+                position++;
             }
         }
         console.log("dest found : " + destinationFound);

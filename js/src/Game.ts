@@ -27,7 +27,7 @@ export default class Game {
     public update(letsPlay: boolean = true) {
 
         if (letsPlay === true) {
-            if (this.wanderer.hasNoMoves()) {
+            if (this.wanderer.hasNoMoves() === true) {
                 this.wanderer.think();
             }
             this.wanderer.act();
