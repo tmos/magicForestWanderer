@@ -13,6 +13,8 @@ export default class Wanderer {
     private forestMap: Floor[][] = [];
     private y: number;
     private x: number;
+    private origX: number;
+    private origY: number;
     private score: number;
     private actions: string[] = [];
 
@@ -21,6 +23,8 @@ export default class Wanderer {
         this.score = score;
         this.x = playerX;
         this.y = playerY;
+        this.origX = playerX;
+        this.origY = playerY;
 
         const height = darkWoods.getForest().length;
         const width = darkWoods.getForest()[0].length;
@@ -354,8 +358,8 @@ export default class Wanderer {
 
     public useSlingshot(direction: String) {
         const currentPos = this.getPosition();
-        let x;
-        let y;
+        let x = currentPos.x;
+        let y = currentPos.y;
         let target;
 
         switch (direction) {
@@ -422,5 +426,13 @@ export default class Wanderer {
 
     public hasNoMoves() {
         return this.actions.length === 0;
+    }
+
+    public getOrigX(): number {
+        return this.origX;
+    }
+
+    public getOrigY(): number {
+        return this.origY;
     }
 }

@@ -40,7 +40,7 @@ export default class Game {
                 type: "error",
             });
             this.wanderer.setScore(-(10 * this.getForest().getNumberOfCases()));
-            this.setWanderer(this.wanderer.getMap());
+            this.setWanderer(this.wanderer.getMap(), this.wanderer.getOrigY(), this.wanderer.getOrigX());
         }
         if (this.wanderer.isOut()) {
             // You just won this forest !
@@ -72,24 +72,25 @@ export default class Game {
         return this.currentForest;
     }
 
-    private setWanderer(m: Floor[][] = undefined): Game {
+    private setWanderer(m: Floor[][] = undefined, y: number = undefined, x: number = undefined): Game {
         const forest = this.currentForest.getForest();
 
         let isOk = false;
-        let y;
-        let x;
-        while (!isOk) {
-            y = Math.floor(Math.random() * (forest.length - 0) + 0);
-            x = Math.floor(Math.random() * (forest[0].length - 0) + 0);
+        if (y === undefined && x === undefined) {
+            while (!isOk) {
+                y = Math.floor(Math.random() * (forest.length - 0) + 0);
+                x = Math.floor(Math.random() * (forest[0].length - 0) + 0);
 
-            if (forest[y][x].isEmpty()) {
-                isOk = true;
+                if (forest[y][x].isEmpty()) {
+                    isOk = true;
+                }
             }
         }
         let oldScore = 0;
         if (this.wanderer) {
             oldScore = this.wanderer.getScore();
         }
+
         this.wanderer = new Wanderer(y, x, this.currentForest, oldScore);
 
         if (m) {
