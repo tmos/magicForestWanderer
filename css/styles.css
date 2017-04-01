@@ -1041,9 +1041,6 @@ body {
 #gameWrapper {
   position: relative; }
 
-.monsterClue.trapClue {
-  background: url("../../assets/bothClues.png"); }
-
 #gameDiv {
   display: block;
   margin: 3rem auto;
@@ -1184,6 +1181,8 @@ body {
     display: block;
     width: 60px;
     height: 60px; }
+    #gameDiv .floorCase.monsterClue.trapClue {
+      background: url("../../assets/bothClues.png"); }
     #gameDiv .floorCase.monsterClue {
       background: url("../../assets/monsterClue.png"); }
     #gameDiv .floorCase.trapClue {
@@ -1201,7 +1200,7 @@ body {
     #gameDiv .floorCase.goal {
       background: url("../../assets/goal.png"); }
     #gameDiv .floorCase.warFog {
-      background-image: none;
+      background-image: none !important;
       background-color: black !important; }
 
 #logDiv {
