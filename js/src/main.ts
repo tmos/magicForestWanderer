@@ -13,7 +13,10 @@ document.getElementById("play").addEventListener("click", (e) => {
 // Init manual game
 document.onkeydown = (e) => {
     switch (e.keyCode) {
-        default:
+        case 13:
             g.update();
+            break;
+        default:
+            break;
     }
 };
