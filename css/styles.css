@@ -1198,7 +1198,7 @@ body {
       width: 60px;
       position: absolute; }
     #gameDiv .floorCase.goal {
-      background: url("../../assets/goal.png"); }
+      background: url("../../assets/goal.png") !important; }
     #gameDiv .floorCase.warFog {
       opacity: 0.61 !important;
       background-color: darkslateblue !important;

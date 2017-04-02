@@ -222,14 +222,17 @@ export default class Wanderer {
 
         let haveToShoot = false;
 
-        if (destinationFound) {
-            if (wandererLogic.shootBefore(borderMap[position])) {
-                haveToShoot = true;
-            }
-            this.actions = this.findPath(thisFloor, borderMap[position], haveToShoot);
-        } else {
+        if (destinationFound === false) {
             // @todo It is impossible
+            // The wanderer does anything
+            position = 0;
         }
+
+        if (wandererLogic.shootBefore(borderMap[position])) {
+            haveToShoot = true;
+        }
+           this.actions = this.findPath(thisFloor, borderMap[position], haveToShoot);
+
         console.log(this.actions);
         return this;
     }

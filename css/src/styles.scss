@@ -87,7 +87,7 @@ body {
             }
         }
         &.goal {
-            background: url('../../assets/goal.png');
+            background: url('../../assets/goal.png')!important;
         }
         &.warFog {
             opacity: 0.61!important;
