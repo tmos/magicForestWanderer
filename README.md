@@ -28,6 +28,15 @@ gulp
 ## Use
 To make the wanderer moves forward, you have to click on the **Next Move!** button, or to press the **Enter** key of your keyboard.
 
+## Code
+The code is organised in 5 classes:
+
+* `Game.ts`: the global controller
+* `Wanderer.ts`: the wanderer
+* `Forest.ts`: the forest (set of tiles)
+* `Floor.ts`: each tile informations (monsters, traps, clues and probabilities)
+* `Logical.ts`: the logical functions and rules used by the wanderer for his exploration
+
 ## Wanderer’s actions
 When the wanderer come to a new tile, he first watches the floor, he updates his map, and he finally chooses his next destination tile and the path to this tile.
 
