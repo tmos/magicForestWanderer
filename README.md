@@ -14,10 +14,12 @@
 * <img src="https://github.com/tmos/magicForestWanderer/blob/master/assets/monsterClue.png" height="35"> Some **wanderer’s bones**. They are presents on the tiles adjacent to a monster. The wanderer could use they as clues to choose his next destination tile.
 * <img src="https://github.com/tmos/magicForestWanderer/blob/master/assets/trapClue.png" height="35"> Some **twirling leaves**. They are presents on the tiles adjacent to a trap. The wanderer could use they as clues to choose his next destination tile.
 
-## Client installation
+## Installation
+
+### Client installation
 Nothing to do, just open `index.html`
 
-## Dev installation
+### Dev installation
 In your terminal, type:
 ```
 npm install
