@@ -7,7 +7,7 @@
 ## Introduction
 **Magic Forest Wanderer** is a JavaScript program that emulates the actions of a wanderer trying to escape from a misty magic forest. The differents elements in the emulation are:
 
-* <img src="https://github.com/tmos/magicForestWanderer/blob/master/assets/hero.png" height="35"> The **wanderer**. He is trying to escape from the misty magic forest. He is equipped with a slingshot and a map to remember his completed course.
+* <img src="https://github.com/tmos/magicForestWanderer/blob/master/assets/hero.png" height="35"> The **wanderer**. He is trying to escape from the misty magic forest. He is equipped with a slingshot and a map (to remember his completed course).
 * <img src="https://github.com/tmos/magicForestWanderer/blob/master/assets/goal.png" height="35"> A **portal**. The wanderer is trying to reach the portal that could make him escape from the forest. Unfortunately, the other portals will only bring him to a wider forest.
 * <img src="https://github.com/tmos/magicForestWanderer/blob/master/assets/monster.png" height="35"> A **monster**. There are a lot of these in this forest. If the wanderer wants to survive, he must avoid the tiles that contains monsters. A monster can be killed by a simple stone throw from an adjacent tile.
 * <img src="https://github.com/tmos/magicForestWanderer/blob/master/assets/trap.png" height="35"> A **trap**. Traps are lethal for the wanderer. Unfortunately, there is no way to defeat traps.
@@ -38,7 +38,7 @@ The code is organised in 5 classes:
 * `Logical.ts`: the logical functions and rules used by the wanderer for his exploration
 
 ## Wanderer’s actions
-When the wanderer come to a new tile, he first watches the floor, he updates his map, and he finally chooses his next destination tile and the path to this tile.
+When the wanderer comes to a new tile, he first watches the floor, he updates his map, and he finally chooses his next destination tile and the path to this tile.
 
 ### Watch the floor
 When the wanderer watches the floor, he uses the function `Floor.setVisited(true)` to mark the tiles under his feet as visited. Then he marks the unvisited adjacent tiles as reachable, using `Floor.setAccessible(true)`.
